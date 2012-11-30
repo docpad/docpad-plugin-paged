@@ -1,0 +1,1 @@
+require('docpad').require('testers').test({pluginPath: path.resolve(path.join(__dirname,'..'))});

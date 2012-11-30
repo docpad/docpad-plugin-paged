@@ -1,0 +1,7 @@
+---
+title: 'Paged Test'
+isPaged: true
+pageCount: 3
+pageSize: 2
+---
+<header>Page <%= @document.page.number %> : Documents [<% for i in [@document.page.startIdx...@document.page.endIdx]: %><%= i %><%= ',' if i < @document.page.endIdx %><% end %>]</header>
