@@ -1,0 +1,27 @@
+---
+title: 'Pagination Test'
+isPaged: true
+pageCount: 3
+pageSize: 2
+---
+<div class="pagination">
+	<ul>
+		<% if !@getDocument().hasPrevPage(): %>
+			<li class="disabled"><span>Prev</span></li>
+		<% else: %>
+			<li><a href="<%= @getDocument().getPrevPage() %>">Prev</a></li>
+		<% end %>
+		<% for num in [0..@document.page.count-1]: %>
+			<% if @document.page.number == num: %>
+				<li class="active"><span><%= num %></span></li>
+			<% else: %>
+				<li><a href="<%= @getDocument().getPagedUrl(num) %>"><%= num %></a></li>
+			<% end %>
+		<% end %>
+		<% if !@getDocument().hasNextPage(): %>
+			<li class="disabled"><span>Next</span></li>
+		<% else: %>
+			<li><a href="<%= @getDocument().getNextPage() %>">Next</a></li>
+		<% end %>
+	</ul>
+</div>
