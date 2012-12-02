@@ -99,7 +99,7 @@ module.exports = (BasePlugin) ->
 				document.set(firstPageDoc: document)
 
 				# loop over the number of pages we have and generate a clone of this document for each
-				for n in [1..numberOfPages]
+				for n in [1..numberOfPages-1]
 					pagedDocData = document.toJSON()
 
 					pagedDoc = docpad.createDocument(pagedDocData)

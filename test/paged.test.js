@@ -1,1 +1,1 @@
-require('docpad').require('testers').test({pluginPath: path.resolve(path.join(__dirname,'..'))});
+require('docpad').require('testers').test({pluginPath: __dirname+'/..',pluginName:'paged'});
