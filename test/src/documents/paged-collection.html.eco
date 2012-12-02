@@ -1,0 +1,7 @@
+---
+title: 'Page Collection Test'
+isPaged: true
+pagedCollection: 'documents'
+pageSize: 1
+---
+<header>Page <%= @document.page.number+1 %> of <%= @document.page.count %> : Documents [<% for i in [@document.page.startIdx...@document.page.endIdx]: %><%= i %><%= ',' if i < @document.page.endIdx-1 %><% end %>]</header>

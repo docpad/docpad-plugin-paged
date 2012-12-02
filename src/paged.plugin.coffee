@@ -99,13 +99,14 @@ module.exports = (BasePlugin) ->
 				document.set(firstPageDoc: document)
 
 				# loop over the number of pages we have and generate a clone of this document for each
-				for n in [1..numberOfPages-1]
-					pagedDocData = document.toJSON()
+				if numberOfPages > 1
+					for n in [1..numberOfPages-1]
+						pagedDocData = document.toJSON()
 
-					pagedDoc = docpad.createDocument(pagedDocData)
-					pagedDoc.set(page: { count: numberOfPages, number: n, size: pageSize, startIdx: n*pageSize, endIdx: Math.min((n*pageSize) + pageSize, lastDoc) })
-					pagedDoc.set(firstPageDoc: document)
-					realDocuments.add(pagedDoc)
+						pagedDoc = docpad.createDocument(pagedDocData)
+						pagedDoc.set(page: { count: numberOfPages, number: n, size: pageSize, startIdx: n*pageSize, endIdx: Math.min((n*pageSize) + pageSize, lastDoc) })
+						pagedDoc.set(firstPageDoc: document)
+						realDocuments.add(pagedDoc)
 
 			tasks = new balUtil.Group(next)
 
