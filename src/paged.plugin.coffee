@@ -59,7 +59,6 @@ module.exports = (BasePlugin) ->
 
 		renderBefore: (opts,next) ->
 			docpad = @docpad
-			config = @config
 
 			{collection,templateData} = opts
 
