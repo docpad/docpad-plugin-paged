@@ -6,14 +6,6 @@ module.exports = (BasePlugin) ->
 		# Plugin Name
 		name: 'paged'
 
-		config:
-			pageExtension: 'page'
-
-		constructor: ->
-			super
-			docpad = @docpad
-			config = @config
-
 		docpadReady: (opts,next) ->
 			# Prepare
 			{docpad} = opts
@@ -71,11 +63,9 @@ module.exports = (BasePlugin) ->
 
 			{collection,templateData} = opts
 
-			realDocuments = new docpad.FilesCollection()
+			pagesToRender = new docpad.FilesCollection()
 
-			documents = collection
-
-			documents.forEach (document) ->
+			collection.forEach (document) ->
 				meta = document.getMeta()
 
 				if (!meta.get('isPaged'))
@@ -106,11 +96,11 @@ module.exports = (BasePlugin) ->
 						pagedDoc = docpad.createDocument(pagedDocData)
 						pagedDoc.set(page: { count: numberOfPages, number: n, size: pageSize, startIdx: n*pageSize, endIdx: Math.min((n*pageSize) + pageSize, lastDoc) })
 						pagedDoc.set(firstPageDoc: document)
-						realDocuments.add(pagedDoc)
+						pagesToRender.add(pagedDoc)
 
 			tasks = new balUtil.Group(next)
 
-			realDocuments.forEach (document) ->
+			pagesToRender.forEach (document) ->
 
 				tasks.push (complete) ->
 					document.normalize({}, complete)
@@ -133,6 +123,6 @@ module.exports = (BasePlugin) ->
 					complete()
 
 			tasks.push (complete) ->
-				docpad.generateRender({collection: realDocuments},complete)
+				docpad.generateRender({collection: pagesToRender},complete)
 
 			return tasks.async()

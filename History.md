@@ -1,5 +1,8 @@
 ## History
 
+- v0.1.3 December 2, 2012
+	- Minor code cleanup.
+	
 - v0.1.2 December 2, 2012
 	- Emergency bug fix release.
 

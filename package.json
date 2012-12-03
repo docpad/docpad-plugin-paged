@@ -1,6 +1,6 @@
 {
     "name": "docpad-plugin-paged",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "DocPad plugin which adds the ability to render a document out to multiple pages",
     "homepage": "https://github.com/benjamind/docpad-plugin-paged",
     "keywords": [
