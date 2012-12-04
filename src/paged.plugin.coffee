@@ -68,6 +68,7 @@ module.exports = (BasePlugin) ->
 				meta = document.getMeta()
 
 				if (!meta.get('isPaged'))
+					docpad.log('debug', 'Document ' + document.get('basename') + ' is not paged')
 					return
 
 				# let the page meta specify count or use 1 by default
@@ -81,6 +82,8 @@ module.exports = (BasePlugin) ->
 					pagedCollection = docpad.getCollection(pagedCollectionName)
 					numberOfPages = Math.ceil(pagedCollection.length / pageSize)
 					lastDoc = pagedCollection.length
+
+				docpad.log('debug', 'Document ' + document.get('basename') + ' has ' + numberOfPages + ' pages')
 
 				# create a page object for this page
 				document.set(page: { count: numberOfPages, number: 0, size: pageSize, startIdx: 0, endIdx: Math.min(pageSize,lastDoc) })
@@ -102,26 +105,52 @@ module.exports = (BasePlugin) ->
 			pagesToRender.forEach (document) ->
 
 				tasks.push (complete) ->
-					document.normalize({}, complete)
+					docpad.log('debug','Normalizing paging document ' + document.get('basename'))
+					document.normalize({},complete)
 
 				tasks.push (complete) ->
-					document.contextualize({}, complete)
+					docpad.log('debug','Contextualizing paging document ' + document.get('basename'))
+					document.contextualize({},complete)
 
 				tasks.push (complete) ->
 					page = document.get('page')
 
 					basename = document.get('basename')
 					outFilename = document.get('outFilename')
+					outPath = document.get('outPath')
 
 					outFilename = outFilename.replace(basename,basename+'.' + page.number)
+					outPath = outPath.replace(basename,basename+'.' + page.number)
 					basename = basename + '.' + page.number
 
+					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
 					document.set('basename',basename)
 					document.set('outFilename', outFilename)
+					document.set('outPath', outPath)
 
 					complete()
 
-			tasks.push (complete) ->
-				docpad.generateRender({collection: pagesToRender},complete)
+			@pagesToRender = pagesToRender
 
 			return tasks.async()
+
+		renderAfter: (opts,next) ->
+			docpad = @docpad
+			pagesToRender = @pagesToRender
+
+			if pagesToRender.length > 0
+				docpad.log('debug','Rendering ' + pagesToRender.length + ' paged documents')
+
+				tasks = new balUtil.Group(next)
+
+				pagesToRender.forEach (document) ->
+					tasks.push (complete) ->
+						document.render({templateData:docpad.getTemplateData()},complete)
+
+					tasks.push (complete) ->
+						document.writeRendered(complete)
+
+
+				return tasks.async()
+			else
+				next();
