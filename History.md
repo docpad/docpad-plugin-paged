@@ -1,8 +1,11 @@
 ## History
 
+- v0.1.4 Dcember 4, 2012
+	- Fixed plugin for breaking changes in v6.17 of docpad
+
 - v0.1.3 December 2, 2012
 	- Minor code cleanup.
-	
+
 - v0.1.2 December 2, 2012
 	- Emergency bug fix release.
 
