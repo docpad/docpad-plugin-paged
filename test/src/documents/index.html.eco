@@ -1,0 +1,19 @@
+---
+title: 'Indexed Pagination Test'
+isPaged: true
+pageOrder: 0
+pagedCollection: 'documents'
+pageSize: 2
+---
+<ul class="pager">
+	<% if !@getDocument().hasNextPage(): %>
+		<li class="previous disabled"><span>&larr; Older</span></li>
+	<% else: %>
+		<li class="previous"><a href="<%= @getDocument().getNextPage() %>">&larr; Older</a></li>
+	<% end %>
+	<% if !@getDocument().hasPrevPage(): %>
+		<li class="next disabled"><span>Newer &rarr;</span></li>
+	<% else: %>
+		<li class="next"><a href="<%= @getDocument().getPrevPage() %>">Newer &rarr;</a></li>
+	<% end %>
+</ul>

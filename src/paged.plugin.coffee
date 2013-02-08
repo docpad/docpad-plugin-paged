@@ -21,7 +21,18 @@ module.exports = (BasePlugin) ->
 				if pageNumber == 0
 					return firstPage.get('url')
 
-				return firstPage.get('url').replace(outExtension, pageNumber + '.' + outExtension)
+				firstPageUrl = firstPage.get('firstPageUrl')
+
+				if (firstPageUrl=='/')
+					newUrl = '/index.' + pageNumber + '.html'
+				else
+					newUrl = firstPageUrl.replace(/\.html/,'.'+pageNumber+'.html')
+
+				cleanUrls = docpad.getPlugin('cleanurls')
+				if (cleanUrls)
+					newUrl = newUrl.replace(/\.html$/, '');
+
+				return newUrl
 
 			DocumentModel::hasNextPage = ->
 				page = @get('page')
@@ -59,7 +70,7 @@ module.exports = (BasePlugin) ->
 
 		renderBefore: (opts,next) ->
 			docpad = @docpad
-
+			debugger;
 			{collection,templateData} = opts
 
 			pagesToRender = new docpad.FilesCollection()
@@ -89,6 +100,7 @@ module.exports = (BasePlugin) ->
 				document.set(page: { count: numberOfPages, number: 0, size: pageSize, startIdx: 0, endIdx: Math.min(pageSize,lastDoc) })
 
 				document.set(firstPageDoc: document)
+				document.set(firstPageUrl: document.get('url'))
 
 				# loop over the number of pages we have and generate a clone of this document for each
 				if numberOfPages > 1
@@ -98,15 +110,36 @@ module.exports = (BasePlugin) ->
 						pagedDoc = docpad.createDocument(pagedDocData)
 						pagedDoc.set(page: { count: numberOfPages, number: n, size: pageSize, startIdx: n*pageSize, endIdx: Math.min((n*pageSize) + pageSize, lastDoc) })
 						pagedDoc.set(firstPageDoc: document)
+
 						pagesToRender.add(pagedDoc)
 
+				@ #return nothing in forEach for performance
+
 			tasks = new balUtil.Group(next)
+
+			getCleanOutPathFromUrl = (url) ->
+				url = url.replace(/\/+$/,'')
+				if /index.html$/.test(url)
+					pathUtil.join(docpadConfig.outPath, url)
+				else
+					pathUtil.join(docpadConfig.outPath, url.replace(/\.html$/,'')+'/index.html')
 
 			pagesToRender.forEach (document) ->
 
 				tasks.push (complete) ->
 					docpad.log('debug','Normalizing paging document ' + document.get('basename'))
 					document.normalize({},complete)
+
+				tasks.push (complete) ->
+					page = document.get('page')
+					basename = document.get('basename')
+					basename = basename + '.' + page.number
+					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
+
+					document.id = document.id.replace(/\.html/,'.'+page.number+'.html')
+					document.set('basename',document.get('basename') + '.' + page.number)
+
+					complete()
 
 				tasks.push (complete) ->
 					docpad.log('debug','Contextualizing paging document ' + document.get('basename'))
@@ -122,11 +155,22 @@ module.exports = (BasePlugin) ->
 					outFilename = outFilename.replace(basename,basename+'.' + page.number)
 					outPath = outPath.replace(basename,basename+'.' + page.number)
 					basename = basename + '.' + page.number
-
+					###
 					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
 					document.set('basename',basename)
 					document.set('outFilename', outFilename)
 					document.set('outPath', outPath)
+					document.id = document.id.replace(/\.html/,'.'+page.number+'.html');
+
+					#update urls
+					urls = document.get('urls')
+					for n in [0..urls.length-1]
+						urls[n] = urls[n].replace(/\.html$/,'.'+page.number+'.html')
+
+					document.set('urls',urls)
+
+					document.set('url',document.get('url').replace(/\.html$/,'.'+page.number+'.html'))
+					###
 
 					complete()
 
@@ -136,7 +180,12 @@ module.exports = (BasePlugin) ->
 
 		renderAfter: (opts,next) ->
 			docpad = @docpad
+			{collection} = opts
 			pagesToRender = @pagesToRender
+
+			database = docpad.getDatabase('html')
+
+			cleanUrls = docpad.getPlugin('cleanurls')
 
 			if pagesToRender.length > 0
 				docpad.log('debug','Rendering ' + pagesToRender.length + ' paged documents')
@@ -148,7 +197,12 @@ module.exports = (BasePlugin) ->
 						document.render({templateData:docpad.getTemplateData()},complete)
 
 					tasks.push (complete) ->
-						document.writeRendered(complete)
+						if (cleanUrls)
+							cleanUrls.cleanUrlsForDocument(document)
+
+						database.add(document)
+						complete()
+						#document.writeRendered(complete)
 
 
 				return tasks.async()
