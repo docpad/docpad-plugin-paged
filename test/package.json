@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"docpad-plugin-eco": "latest"
+		"docpad-plugin-eco": "latest",
+		"docpad-plugin-cleanurls": "latest"
 	}
 }
