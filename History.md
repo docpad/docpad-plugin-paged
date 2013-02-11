@@ -1,16 +1,14 @@
 ## History
 
-- v2.0.0 January 26, 2013
-	- Bumped to v2.0.0
-	- Updated dependencies
-		- [bal-util](https://github.com/balupton/bal-util) from ~1.13.10 to ~1.16.1
+- v2.1.1 February 8, 2013
+	- Switched repo to [Docpad organization](https://github.com/docpad/docpad-plugin-paged)
 
-- v0.1.4 Dcember 4, 2012
-	- Fixed plugin for breaking changes in v6.17 of docpad
+- v2.1.0 Feburary 7, 2013
+	- Fixed [issue #2](https://github.com/docpad/docpad-plugin-paged/issues/1), now compatibile with cleanUrls plugin.
 
 - v0.1.3 December 2, 2012
 	- Minor code cleanup.
-
+	
 - v0.1.2 December 2, 2012
 	- Emergency bug fix release.
 
