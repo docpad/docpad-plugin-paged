@@ -1,5 +1,10 @@
 ## History
 
+- v2.1.2 March 7, 2013
+	- Repackaged
+	- Dependency upgrades
+		-  `bal-util` from ~1.16.1 to ~1.16.8
+
 - v2.1.1 February 8, 2013
 	- Switched repo to [Docpad organization](https://github.com/docpad/docpad-plugin-paged)
 
