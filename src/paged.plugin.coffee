@@ -1,6 +1,6 @@
 # Export Plugin
 module.exports = (BasePlugin) ->
-	balUtil = require('bal-util')
+	TaskGroup = require('taskgroup')
 
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
@@ -115,7 +115,7 @@ module.exports = (BasePlugin) ->
 
 				@ #return nothing in forEach for performance
 
-			tasks = new balUtil.Group(next)
+			tasks = new TaskGroup(next)
 
 			getCleanOutPathFromUrl = (url) ->
 				url = url.replace(/\/+$/,'')
@@ -190,7 +190,7 @@ module.exports = (BasePlugin) ->
 			if pagesToRender.length > 0
 				docpad.log('debug','Rendering ' + pagesToRender.length + ' paged documents')
 
-				tasks = new balUtil.Group(next)
+				tasks = new TaskGroup(next)
 
 				pagesToRender.forEach (document) ->
 					tasks.push (complete) ->
