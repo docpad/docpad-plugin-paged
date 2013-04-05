@@ -1,6 +1,6 @@
 # Export Plugin
 module.exports = (BasePlugin) ->
-	TaskGroup = require('taskgroup')
+	{TaskGroup} = require('taskgroup')
 
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
@@ -115,7 +115,7 @@ module.exports = (BasePlugin) ->
 
 				@ #return nothing in forEach for performance
 
-			tasks = new TaskGroup(next)
+			tasks = new TaskGroup().setConfig(concurrency:0).once('complete',next)
 
 			getCleanOutPathFromUrl = (url) ->
 				url = url.replace(/\/+$/,'')
@@ -126,11 +126,11 @@ module.exports = (BasePlugin) ->
 
 			pagesToRender.forEach (document) ->
 
-				tasks.push (complete) ->
+				tasks.addTask (complete) ->
 					docpad.log('debug','Normalizing paging document ' + document.get('basename'))
 					document.normalize({},complete)
 
-				tasks.push (complete) ->
+				tasks.addTask (complete) ->
 					page = document.get('page')
 					basename = document.get('basename')
 					basename = basename + '.' + page.number
@@ -141,11 +141,11 @@ module.exports = (BasePlugin) ->
 
 					complete()
 
-				tasks.push (complete) ->
+				tasks.addTask (complete) ->
 					docpad.log('debug','Contextualizing paging document ' + document.get('basename'))
 					document.contextualize({},complete)
 
-				tasks.push (complete) ->
+				tasks.addTask (complete) ->
 					page = document.get('page')
 
 					basename = document.get('basename')
@@ -176,7 +176,7 @@ module.exports = (BasePlugin) ->
 
 			@pagesToRender = pagesToRender
 
-			return tasks.async()
+			return tasks.run()
 
 		renderAfter: (opts,next) ->
 			docpad = @docpad
@@ -190,13 +190,13 @@ module.exports = (BasePlugin) ->
 			if pagesToRender.length > 0
 				docpad.log('debug','Rendering ' + pagesToRender.length + ' paged documents')
 
-				tasks = new TaskGroup(next)
+				tasks = new TaskGroup().setConfig(concurrency:0).once('complete',next)
 
 				pagesToRender.forEach (document) ->
-					tasks.push (complete) ->
+					tasks.addTask (complete) ->
 						document.render({templateData:docpad.getTemplateData()},complete)
 
-					tasks.push (complete) ->
+					tasks.addTask (complete) ->
 						if (cleanUrls)
 							cleanUrls.cleanUrlsForDocument(document)
 
@@ -205,6 +205,6 @@ module.exports = (BasePlugin) ->
 						#document.writeRendered(complete)
 
 
-				return tasks.async()
+				return tasks.run()
 			else
 				next();
