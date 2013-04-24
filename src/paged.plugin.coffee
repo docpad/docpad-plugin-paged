@@ -70,7 +70,6 @@ module.exports = (BasePlugin) ->
 
 		renderBefore: (opts,next) ->
 			docpad = @docpad
-			debugger;
 			{collection,templateData} = opts
 
 			pagesToRender = new docpad.FilesCollection()
@@ -108,7 +107,14 @@ module.exports = (BasePlugin) ->
 						pagedDocData = document.toJSON()
 
 						pagedDoc = docpad.createDocument(pagedDocData)
-						pagedDoc.set(page: { count: numberOfPages, number: n, size: pageSize, startIdx: n*pageSize, endIdx: Math.min((n*pageSize) + pageSize, lastDoc) })
+						pagedDoc.set(
+							page:
+								count: numberOfPages
+								number: n
+								size: pageSize
+								startIdx: n*pageSize
+								endIdx: Math.min((n*pageSize) + pageSize, lastDoc)
+						)
 						pagedDoc.set(firstPageDoc: document)
 
 						pagesToRender.add(pagedDoc)
@@ -152,8 +158,8 @@ module.exports = (BasePlugin) ->
 					outFilename = document.get('outFilename')
 					outPath = document.get('outPath')
 
-					outFilename = outFilename.replace(basename,basename+'.' + page.number)
-					outPath = outPath.replace(basename,basename+'.' + page.number)
+					outFilename = outFilename.replace(basename, basename+'.' + page.number)
+					outPath = outPath.replace(basename, basename+'.' + page.number)
 					basename = basename + '.' + page.number
 					###
 					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
