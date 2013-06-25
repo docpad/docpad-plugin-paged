@@ -7,6 +7,7 @@ require('docpad').require('testers')
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			autoExit: 'safe'
+			removeWhitespace: true
 		}
 
 		# DocPad Configuration
