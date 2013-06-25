@@ -1,4 +1,8 @@
-# Paged Plugin for DocPad
+# Paged Plugin for [DocPad](http://docpad.org)
+
+[![Build Status](https://secure.travis-ci.org/docpad/docpad-plugin-paged.png?branch=master)](http://travis-ci.org/docpad/docpad-plugin-paged "Check this project's build status on TravisCI")
+[![NPM version](https://badge.fury.io/js/docpad-plugin-paged.png)](https://npmjs.org/package/docpad-plugin-paged "View this project on NPM")
+
 This plugin provides [DocPad](https://docpad.org) with Paging. Documents can declare a number of pages that should be rendered for the document, or a collection over which the document should be rendered repeatedly.
 
 
@@ -84,9 +88,15 @@ This will render out documents from the `posts` collection in groups of 3. The f
 
 In this example we can also see the use of the new helper methods `hasPrevPage()`, `hasNextPage()`, `getPrevPage()`, `getNextPage()` and `getPagedUrl(n)`. Hopefully these methods are pretty self explanatory, with the get methods returning the urls for the relevant pages. In this example we use these methods to create the standard Twitter Bootstrap pagination HTML.
 
+
 ## History
-You can discover the history inside the `History.md` file
+[You can discover the history inside the `History.md` file](https://github.com/bevry/docpad-plugin-paged/blob/master/History.md#files)
+
+
+## Contributing
+[You can discover the contributing instructions inside the `Contributing.md` file](https://github.com/bevry/docpad-plugin-paged/blob/master/Contributing.md#files)
+
 
 ## License
 Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT License](http://creativecommons.org/licenses/MIT/)
-<br/>Copyright &copy; 2012 [Ben Delarre](http://delarre.net)
+<br/>Copyright &copy; 2012+ [Ben Delarre](http://delarre.net) <ben@delarre.net>
