@@ -39,6 +39,6 @@
 	},
 	"main": "./out/paged.plugin.js",
 	"scripts": {
-		"test": "node ./out/paged.test.js"
+		"test": "node ./out/paged.test.js -d"
 	}
 }

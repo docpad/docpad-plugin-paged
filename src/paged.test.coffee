@@ -12,11 +12,8 @@ require('docpad').require('testers')
 
 		# DocPad Configuration
 		{
-			logLevel: 5
 			enabledPlugins:
-				'paged': true
 				'cleanurls': false
-				'eco': true
 		}
 	)
 	.test(
@@ -29,15 +26,6 @@ require('docpad').require('testers')
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
-
-		# DocPad Configuration
-		{
-			logLevel: 5
-			enabledPlugins:
-				'paged': true
-				'cleanurls': true
-				'eco': true
-		}
 	)
 	.test(
 		# Test Configuration
@@ -47,15 +35,5 @@ require('docpad').require('testers')
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static'
 			removeWhitespace: true
-		}
-
-		# DocPad Configuration
-		{
-			logLevel: 5
-			enabledPlugins:
-				'paged': true
-				'cleanurls': true
-				'eco': true
-			env: 'static'
 		}
 	)

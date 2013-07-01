@@ -2,215 +2,201 @@
 module.exports = (BasePlugin) ->
 	{TaskGroup} = require('taskgroup')
 
+	# Define Plugin
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
 		name: 'paged'
 
-		docpadReady: (opts,next) ->
+		# Extend Collections
+		# Extend our Prototypes with the Paged Helpers
+		extendCollections: (opts) ->
 			# Prepare
-			{docpad} = opts
+			docpad = @docpad
+			database = docpad.getDatabase()
 			{DocumentModel} = docpad
 
-			# Extend our prototype
-			DocumentModel::getPagedUrl = (pageNumber) ->
-				firstPage = @get('firstPageDoc')
+			# Paged collection
+			docpad.setCollections(
+				paged: database.findAllLive(isPaged: true)
+			)
 
-				outExtension = firstPage.get('outExtension')
-				baseName = firstPage.get('basename')
+			# Get the url of the desired page
+			DocumentModel::getPagedUrl ?= (pageNumber) ->
+				# Prepare
+				page = @get('page')
+				pageNumber ?= page?.number ? 0
 
-				if pageNumber == 0
-					return firstPage.get('url')
-
-				firstPageUrl = firstPage.get('firstPageUrl')
-
-				if (firstPageUrl=='/')
-					newUrl = '/index.' + pageNumber + '.html'
+				# Fetch
+				pageId = page.pages[pageNumber]
+				pageDocument = docpad.getFileById(pageId)
+				unless pageDocument?
+					docpad.log('warn', "Could not find the page document #{pageId} which is page #{pageNumber} of #{@get('relativePath')}")
+					pageUrl = '404'
 				else
-					newUrl = firstPageUrl.replace(/\.html/,'.'+pageNumber+'.html')
+					pageUrl = pageDocument.get('url')
 
-				cleanUrls = docpad.getPlugin('cleanurls')
-				if (cleanUrls)
-					newUrl = newUrl.replace(/\.html$/, '');
+				# Return
+				return pageUrl
 
-				return newUrl
-
-			DocumentModel::hasNextPage = ->
+			# Do we have another page left?
+			DocumentModel::hasNextPage ?= ->
+				# Prepare
 				page = @get('page')
 
+				# Check
+				has = page.number < page.count-1
+
+				# Return
+				return has
+
+			# Return the URL of the next page
+			DocumentModel::getNextPage ?= ->
+				# Prepare
+				page = @get('page')
+				result = '#'
+
+				# Check
 				if page.number < page.count-1
-					return true
+					result = @getPagedUrl(page.number+1)
 
-				return false
+				# Default
+				return result
 
-			DocumentModel::getNextPage = ->
+			# Do we have a previous page?
+			DocumentModel::hasPrevPage ?= ->
+				# Prepare
 				page = @get('page')
 
-				if page.number < page.count-1
-					return @getPagedUrl(page.number+1)
+				# Check
+				has = page.number > 0
 
-				return '#'
+				# Return
+				return has
 
-			DocumentModel::hasPrevPage = ->
+			# Get the URL of the previous page
+			DocumentModel::getPrevPage ?= ->
+				# Prepare
 				page = @get('page')
+				result = '#'
 
+				# Check
 				if page.number > 0
-					return true
+					result = @getPagedUrl(page.number-1)
 
-				return false
+				# Return
+				return result
 
-			DocumentModel::getPrevPage = ->
-				page = @get('page')
-
-				if page.number > 0
-					return @getPagedUrl(page.number-1)
-
-				return '#'
-
-			next()
-
+		# Render Before
 		renderBefore: (opts,next) ->
+			# Prepare
 			docpad = @docpad
 			{collection,templateData} = opts
+			database = docpad.getDatabase()
 
-			pagesToRender = new docpad.FilesCollection()
+			# Create a new collection to temporarily store our pages to render
+			newPagesToRender = []
 
-			collection.forEach (document) ->
-				meta = document.getMeta()
+			# Completion callback
+			tasks = new TaskGroup().setConfig(concurrency:0).once 'complete', (err) ->
+				# Check
+				return next(err)  if err
 
-				if (!meta.get('isPaged'))
-					docpad.log('debug', 'Document ' + document.get('basename') + ' is not paged')
+				# Add the pages to render to our render collection
+				collection.add(newPagesToRender)
+				database.add(newPagesToRender)
+
+				# Complete
+				return next()
+
+			# Cycle through everything to render
+			docpad.getCollection('paged').forEach (document) ->
+				# Remove the previously generated pages
+				if document.get('isPagedAuto')
+					collection.remove(document)
+					database.remove(document)
 					return
 
-				# let the page meta specify count or use 1 by default
-				numberOfPages = meta.get('pageCount') or 1
-				pageSize = meta.get('pageSize') or 5
+				# Let the page meta specify count or use 1 by default
+				numberOfPages = document.get('pageCount') or 1
+				pageSize = document.get('pageSize') or 5
 				lastDoc = pageSize * numberOfPages
 
 				# if pagedCollection is specified then use that to determine number of pages
-				if meta.get('pagedCollection')
-					pagedCollectionName = meta.get('pagedCollection')
+				if document.get('pagedCollection')
+					pagedCollectionName = document.get('pagedCollection')
 					pagedCollection = docpad.getCollection(pagedCollectionName)
 					numberOfPages = Math.ceil(pagedCollection.length / pageSize)
 					lastDoc = pagedCollection.length
 
-				docpad.log('debug', 'Document ' + document.get('basename') + ' has ' + numberOfPages + ' pages')
+				# Prepare
+				relativePath = document.get('relativePath')
+				filename = document.get('filename')
+				basename = document.get('basename')
+				extension = document.get('extensions').join('.')
+				outFilename = document.get('outFilename')
+				outBasename = document.get('outBasename')
+				outExtension = document.get('outExtension')
+				url = document.get('url')
+				pages = [document.cid]
 
-				# create a page object for this page
-				document.set(page: { count: numberOfPages, number: 0, size: pageSize, startIdx: 0, endIdx: Math.min(pageSize,lastDoc) })
+				# Log
+				docpad.log('debug', "Document #{relativePath} has #{numberOfPages} pages")
 
-				document.set(firstPageDoc: document)
-				document.set(firstPageUrl: document.get('url'))
+				# Create a page object for this page
+				document.set(
+					isPaged: true
+					page:
+						count: numberOfPages
+						size: pageSize
+						number: 0
+						startIdx: 0
+						endIdx: Math.min(pageSize, lastDoc)
+						pages: pages
+				)
 
-				# loop over the number of pages we have and generate a clone of this document for each
+				# Loop over the number of pages we have and generate a clone of this document for each
 				if numberOfPages > 1
-					for n in [1..numberOfPages-1]
-						pagedDocData = document.toJSON()
+					[1...numberOfPages].forEach (pageNumber) ->
+						# Create our new page
+						pageDocument = document.clone()
+						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
+						pageOutFilename = "#{outBasename}-#{pageNumber}.#{outExtension}"
 
-						pagedDoc = docpad.createDocument(pagedDocData)
-						pagedDoc.set(
-							page:
+						# Apply the new properties
+						pageDocument.set(
+							isPagedAuto: document.cid
+							page:  # as we do a shallow extend, make sure all page properties are defined
 								count: numberOfPages
-								number: n
 								size: pageSize
-								startIdx: n*pageSize
-								endIdx: Math.min((n*pageSize) + pageSize, lastDoc)
+								number: pageNumber
+								startIdx: pageNumber*pageSize
+								endIdx: Math.min(pageNumber*pageSize + pageSize, lastDoc)
+								pages: pages
+							fullPath: null  # treat it as a virtual document
+							relativePath: relativePath.replace(filename, pageFilename)
+							filename: pageFilename
+							outFilename: pageOutFilename
+							url: url.replace(outFilename, pageOutFilename)
 						)
-						pagedDoc.set(firstPageDoc: document)
 
-						pagesToRender.add(pagedDoc)
+						# Queue the normalization of the new document
+						tasks.addTask (complete) ->
+							pageDocument.normalize (err) ->
+								# Check
+								return complete(err)  if err
 
-				@ #return nothing in forEach for performance
+								# Add it to the list
+								# Works as arrays are references
+								pages.push(pageDocument.cid)
 
-			tasks = new TaskGroup().setConfig(concurrency:0).once('complete',next)
+								# Add it to the list that will be added to the database
+								newPagesToRender.push(pageDocument)
 
-			getCleanOutPathFromUrl = (url) ->
-				url = url.replace(/\/+$/,'')
-				if /index.html$/.test(url)
-					pathUtil.join(docpadConfig.outPath, url)
-				else
-					pathUtil.join(docpadConfig.outPath, url.replace(/\.html$/,'')+'/index.html')
+								# Complete
+								return complete()
 
-			pagesToRender.forEach (document) ->
+			# Normalize the documents and finish up
+			tasks.run()
 
-				tasks.addTask (complete) ->
-					docpad.log('debug','Normalizing paging document ' + document.get('basename'))
-					document.normalize({},complete)
-
-				tasks.addTask (complete) ->
-					page = document.get('page')
-					basename = document.get('basename')
-					basename = basename + '.' + page.number
-					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
-
-					document.id = document.id.replace(/\.html/,'.'+page.number+'.html')
-					document.set('basename',document.get('basename') + '.' + page.number)
-
-					complete()
-
-				tasks.addTask (complete) ->
-					docpad.log('debug','Contextualizing paging document ' + document.get('basename'))
-					document.contextualize({},complete)
-
-				tasks.addTask (complete) ->
-					page = document.get('page')
-
-					basename = document.get('basename')
-					outFilename = document.get('outFilename')
-					outPath = document.get('outPath')
-
-					outFilename = outFilename.replace(basename, basename+'.' + page.number)
-					outPath = outPath.replace(basename, basename+'.' + page.number)
-					basename = basename + '.' + page.number
-					###
-					docpad.log('debug','Renaming paging document ' + document.get('basename') + ' to ' + basename)
-					document.set('basename',basename)
-					document.set('outFilename', outFilename)
-					document.set('outPath', outPath)
-					document.id = document.id.replace(/\.html/,'.'+page.number+'.html');
-
-					#update urls
-					urls = document.get('urls')
-					for n in [0..urls.length-1]
-						urls[n] = urls[n].replace(/\.html$/,'.'+page.number+'.html')
-
-					document.set('urls',urls)
-
-					document.set('url',document.get('url').replace(/\.html$/,'.'+page.number+'.html'))
-					###
-
-					complete()
-
-			@pagesToRender = pagesToRender
-
-			return tasks.run()
-
-		renderAfter: (opts,next) ->
-			docpad = @docpad
-			{collection} = opts
-			pagesToRender = @pagesToRender
-
-			database = docpad.getDatabase('html')
-
-			cleanUrls = docpad.getPlugin('cleanurls')
-
-			if pagesToRender.length > 0
-				docpad.log('debug','Rendering ' + pagesToRender.length + ' paged documents')
-
-				tasks = new TaskGroup().setConfig(concurrency:0).once('complete',next)
-
-				pagesToRender.forEach (document) ->
-					tasks.addTask (complete) ->
-						document.render({templateData:docpad.getTemplateData()},complete)
-
-					tasks.addTask (complete) ->
-						if (cleanUrls)
-							cleanUrls.cleanUrlsForDocument(document)
-
-						database.add(document)
-						complete()
-						#document.writeRendered(complete)
-
-
-				return tasks.run()
-			else
-				next();
+			# Done
+			true
