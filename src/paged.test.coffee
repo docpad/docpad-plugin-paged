@@ -3,6 +3,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
+			testerName: 'paged without cleanurls'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
@@ -19,6 +20,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
+			testerName: 'paged with cleanurls'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
@@ -30,6 +32,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
+			testerName: 'paged with cleanurls on static'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'

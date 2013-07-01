@@ -30,10 +30,12 @@ module.exports = (BasePlugin) ->
 				pageId = page.pages[pageNumber]
 				pageDocument = docpad.getFileById(pageId)
 				unless pageDocument?
-					docpad.log('warn', "Could not find the page document #{pageId} which is page #{pageNumber} of #{@get('relativePath')}")
-					pageUrl = '404'
+					err =  "Could not find the page document #{pageId} which is page #{pageNumber} of #{@get('relativePath')}"
+					docpad.error(err)
+					pageUrl = err
 				else
 					pageUrl = pageDocument.get('url')
+					console.log 'fetch', pageDocument.id, pageDocument.attributes
 
 				# Return
 				return pageUrl
@@ -87,6 +89,7 @@ module.exports = (BasePlugin) ->
 				return result
 
 		# Render Before
+		renderBeforePriority: 550  # run before clean urls
 		renderBefore: (opts,next) ->
 			# Prepare
 			docpad = @docpad
@@ -137,13 +140,13 @@ module.exports = (BasePlugin) ->
 				outBasename = document.get('outBasename')
 				outExtension = document.get('outExtension')
 				url = document.get('url')
-				pages = [document.cid]
+				pages = [document.id]
 
 				# Log
-				docpad.log('debug', "Document #{relativePath} has #{numberOfPages} pages")
+				# docpad.log('debug', "Document #{relativePath} has #{numberOfPages} pages")
 
 				# Create a page object for this page
-				document.set(
+				document.setMeta(
 					isPaged: true
 					page:
 						count: numberOfPages
@@ -160,11 +163,13 @@ module.exports = (BasePlugin) ->
 						# Create our new page
 						pageDocument = document.clone()
 						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
-						pageOutFilename = "#{outBasename}-#{pageNumber}.#{outExtension}"
+						pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
+						pageRelativePath = relativePath.replace(filename, pageFilename)
 
 						# Apply the new properties
-						pageDocument.set(
-							isPagedAuto: document.cid
+						pageDocument.attributes.urls = []
+						pageDocument.setMeta(
+							isPagedAuto: true
 							page:  # as we do a shallow extend, make sure all page properties are defined
 								count: numberOfPages
 								size: pageSize
@@ -173,11 +178,11 @@ module.exports = (BasePlugin) ->
 								endIdx: Math.min(pageNumber*pageSize + pageSize, lastDoc)
 								pages: pages
 							fullPath: null  # treat it as a virtual document
-							relativePath: relativePath.replace(filename, pageFilename)
+							relativePath: pageRelativePath
 							filename: pageFilename
 							outFilename: pageOutFilename
-							url: url.replace(outFilename, pageOutFilename)
 						)
+						#console.log 'create', pageDocument.id, pageDocument.attributes
 
 						# Queue the normalization of the new document
 						tasks.addTask (complete) ->
@@ -187,7 +192,7 @@ module.exports = (BasePlugin) ->
 
 								# Add it to the list
 								# Works as arrays are references
-								pages.push(pageDocument.cid)
+								pages.push(pageDocument.id)
 
 								# Add it to the list that will be added to the database
 								newPagesToRender.push(pageDocument)
