@@ -9,49 +9,59 @@ This plugin provides [DocPad](https://docpad.org) with Paging. Documents can dec
 ## Install
 
 ```
-npm install --save docpad-plugin-paged
+docpad install docpad-plugin-paged
 ```
 
 
 ## Usage
 
-### Setup
+### Explanation
 
-To use, simply add `isPaged: true` to the meta data for any document that you want to be rendered with paging. You can then use `pageSize` or `pagedCollection` to instruct the plugin how many pages to generate from this document.
+The Paged plugin works by scanning the meta data of your document and looking for the `isPaged: true` meta data attribute.
 
-In documents that have paging enabled we can use the `@document.page` object to retrieve information about the current and total pages. The `page` object is of the form:
+- If you are wanting to page a listing of documents, then you would want to pass over the`pagedCollection: 'collectionName'` meta data attribute with the collection name being whatever collection you are listing.
+- If you are wanting to split the current document into multiple pages, then you want to specify the `pageCount: 5` meta data attribute, where 5 is how many pages you want to have
+- You can also specify the `pageSize: 5` meta data attribute (defaults to `1`) which indicates how many max items should be listed on an individual page
 
-```
+That being done, paged will scan your documents in the `renderBefore` action and clone your paged document for each page that will be needed. Setting the following attributes for each page document:
+
+``` coffee
 {
-	number: 0,		// current page number
-	count: 10,		// total number of pages
-	size: 5,		// expected number of documents per page
-	startIdx: 0,	// document index for first document in this page
-	endIdx: 5		// document index for last document in this page
+	count: 10       # total number of pages
+	size: 5         # expected number of documents per page
+	number: 0       # current page number
+	startIdx: 0     # position of the first item in this page
+	endIdx: 5       # position of the last item in this page
+	pages: [50,1]   # document ids for each of the pages
 }
 ```
 
-### Paging Collections
+You will interact with the paged plugin via the following template helpers that the paged plugin defines for you:
 
-You can generate pages over a collection by using the `pagedCollection` meta property. Simply specify the name of a collection and the plugin will use this collections length to calculate how many pages to generate from this document. So if your `posts` collection contains 5 documents, and you have specified a `pageSize` of 3 then the paging plugin will render 2 pages, the first with documents 0-2 and the second with the remaining 2 documents.
+- `hasPrevPage(document ?= @getDocument())`
+- `hasNextPage(document ?= @getDocument())`
+- `getPrevPage(document ?= @getDocument())`
+- `getNextPage(document ?= @getDocument())`
+- `getPagedUrl(pageNumber ?= 0, document ?= @getDocument())`
 
-### Example
 
-For instance we could create the file `src/documents/index.html.eco` which contains something similar to the followìng:
+### Example: Paging a Collection Listing
 
-```
+Here is an example where we say create a `src/documents/index.html.eco` file that pages out our `posts` custom collection.
+
+It will create documents for each page for the `posts` collection in groups of 3. The first 3 documents in the collection will be rendered into a file called `index.html` as normal, then the remaining documents from the collection will be rendered into subsequent files `index.1.html`, `index.2.html`, `index.3.html` etc.
+
+``` erb
 ---
 title: 'Home'
 layout: 'default'
-tags: ['page']
 isPaged: true
-pageOrder: 0
 pagedCollection: 'posts'
 pageSize: 3
 ---
-<% posts = @getCollection('posts') %>
-<% for i in [@document.page.startIdx...@document.page.endIdx]: %>
-	<% document = posts.at(i).toJSON() %>
+
+<!-- Page Content -->
+<% posts = @getCollection('posts').toJSON()[@document.page.startIdx...@document.page.endIdx]: %>
 	<article id="post" class="post">
 		<h1><a href='<%=document.url%>'><%= document.title %></a></h1>
 		<div class="post-date"><%= document.date.toLocaleDateString() %></div>
@@ -61,32 +71,86 @@ pageSize: 3
 	</article>
 <% end %>
 
+<!-- Page Listing -->
 <div class="pagination">
 	<ul>
-		<% if !@getDocument().hasPrevPage(): %>
+		<!-- Previous Page Button -->
+		<% if !@hasPrevPage(): %>
 			<li class="disabled"><span>Prev</span></li>
 		<% else: %>
-			<li><a href="<%= @getDocument().getPrevPage() %>">Prev</a></li>
+			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
 		<% end %>
-		<% for num in [0..@document.page.count-1]: %>
-			<% if @document.page.number == num: %>
-				<li class="active"><span><%= num %></span></li>
+
+		<!-- Page Number Buttons -->
+		<% for pageNumber in [0..@document.page.count-1]: %>
+			<% if @document.page.number == pageNumber: %>
+				<li class="active"><span><%= pageNumber %></span></li>
 			<% else: %>
-				<li><a href="<%= @getDocument().getPagedUrl(num) %>"><%= num %></a></li>
+				<li><a href="<%= @getPagedUrl(pageNumber) %>"><%= pageNumber %></a></li>
 			<% end %>
 		<% end %>
-		<% if !@getDocument().hasNextPage(): %>
+
+		<!-- Next Page Button -->
+		<% if !@hasNextPage(): %>
 			<li class="disabled"><span>Next</span></li>
 		<% else: %>
-			<li><a href="<%= @getDocument().getNextPage() %>">Next</a></li>
+			<li><a href="<%= @getNextPage() %>">Next</a></li>
 		<% end %>
 	</ul>
 </div>
 ```
 
-This will render out documents from the `posts` collection in groups of 3. The first 3 documents in the collection will be rendered into a file called `index.html` as normal, then the remaining documents from the collection will be rendered into subsequent files `index.1.html`, `index.2.html`, `index.3.html` etc.
 
-In this example we can also see the use of the new helper methods `hasPrevPage()`, `hasNextPage()`, `getPrevPage()`, `getNextPage()` and `getPagedUrl(n)`. Hopefully these methods are pretty self explanatory, with the get methods returning the urls for the relevant pages. In this example we use these methods to create the standard Twitter Bootstrap pagination HTML.
+### Example: Splitting a Document into Multiple Pages
+
+In this example we will split up a document say `src/documents/posts/awesome.html.eco` into 3 pages that have a max of 3 items per page.
+
+``` erb
+---
+title: 'Awesome Pages Post'
+layout: 'default'
+isPaged: true
+pageCount: 3
+pageSize: 1
+---
+
+<!-- Page Content -->
+<% if @document.page.number is 0: %>
+	first awesome page
+<% else if @document.page.number is 1: %>
+	secodn awesome page
+<% else if @document.page.number is 2: %>
+	third awesome page
+<% end %>
+
+<!-- Page Listing -->
+<div class="pagination">
+	<ul>
+		<!-- Previous Page Button -->
+		<% if !@hasPrevPage(): %>
+			<li class="disabled"><span>Prev</span></li>
+		<% else: %>
+			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
+		<% end %>
+		
+		<!-- Page Number Buttons -->
+		<% for num in [0..@document.page.count-1]: %>
+			<% if @document.page.number == num: %>
+				<li class="active"><span><%= num %></span></li>
+			<% else: %>
+				<li><a href="<%= @getPageUrl(num) %>"><%= num %></a></li>
+			<% end %>
+		<% end %>
+		
+		<!-- Next Page Button -->
+		<% if !@hasNextPage(): %>
+			<li class="disabled"><span>Next</span></li>
+		<% else: %>
+			<li><a href="<%= @getNextPage() %>">Next</a></li>
+		<% end %>
+	</ul>
+</div>
+```
 
 
 ## History

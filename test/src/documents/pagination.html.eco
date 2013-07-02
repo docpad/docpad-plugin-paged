@@ -6,22 +6,22 @@ pageSize: 2
 ---
 <div class="pagination">
 	<ul>
-		<% if !@getDocument().hasPrevPage(): %>
+		<% if !@hasPrevPage(): %>
 			<li class="disabled"><span>Prev</span></li>
 		<% else: %>
-			<li><a href="<%= @getDocument().getPrevPage() %>">Prev</a></li>
+			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
 		<% end %>
 		<% for num in [0..@document.page.count-1]: %>
 			<% if @document.page.number == num: %>
 				<li class="active"><span><%= num %></span></li>
 			<% else: %>
-				<li><a href="<%= @getDocument().getPagedUrl(num) %>"><%= num %></a></li>
+				<li><a href="<%= @getPageUrl(num) %>"><%= num %></a></li>
 			<% end %>
 		<% end %>
-		<% if !@getDocument().hasNextPage(): %>
+		<% if !@hasNextPage(): %>
 			<li class="disabled"><span>Next</span></li>
 		<% else: %>
-			<li><a href="<%= @getDocument().getNextPage() %>">Next</a></li>
+			<li><a href="<%= @getNextPage() %>">Next</a></li>
 		<% end %>
 	</ul>
 </div>

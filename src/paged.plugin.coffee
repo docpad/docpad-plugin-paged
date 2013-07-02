@@ -1,49 +1,56 @@
 # Export Plugin
 module.exports = (BasePlugin) ->
-	{TaskGroup} = require('taskgroup')
-
 	# Define Plugin
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
 		name: 'paged'
 
 		# Extend Collections
-		# Extend our Prototypes with the Paged Helpers
+		# Define our paged collection that contains all of our paged documents
 		extendCollections: (opts) ->
 			# Prepare
 			docpad = @docpad
 			database = docpad.getDatabase()
-			{DocumentModel} = docpad
 
 			# Paged collection
 			docpad.setCollections(
 				paged: database.findAllLive(isPaged: true)
 			)
 
+		# Extend Template Data
+		# Add our tempate helpers
+		extendTemplateData: (opts) ->
+			# Prepare
+			docpad = @docpad
+			{templateData} = opts
+
 			# Get the url of the desired page
-			DocumentModel::getPagedUrl ?= (pageNumber) ->
+			templateData.getPageUrl = (pageNumber, document) ->
 				# Prepare
-				page = @get('page')
+				document ?= @getDocument()
+				page = document.get('page')
 				pageNumber ?= page?.number ? 0
 
 				# Fetch
 				pageId = page.pages[pageNumber]
 				pageDocument = docpad.getFileById(pageId)
+
+				# Check
 				unless pageDocument?
 					err =  "Could not find the page document #{pageId} which is page #{pageNumber} of #{@get('relativePath')}"
 					docpad.error(err)
 					pageUrl = err
 				else
 					pageUrl = pageDocument.get('url')
-					console.log 'fetch', pageDocument.id, pageDocument.attributes
 
 				# Return
 				return pageUrl
 
 			# Do we have another page left?
-			DocumentModel::hasNextPage ?= ->
+			templateData.hasNextPage = (document) ->
 				# Prepare
-				page = @get('page')
+				document ?= @getDocument()
+				page = document.get('page')
 
 				# Check
 				has = page.number < page.count-1
@@ -52,22 +59,24 @@ module.exports = (BasePlugin) ->
 				return has
 
 			# Return the URL of the next page
-			DocumentModel::getNextPage ?= ->
+			templateData.getNextPage = (document) ->
 				# Prepare
-				page = @get('page')
+				document ?= @getDocument()
+				page = document.get('page')
 				result = '#'
 
 				# Check
 				if page.number < page.count-1
-					result = @getPagedUrl(page.number+1)
+					result = @getPageUrl(page.number+1, document)
 
 				# Default
 				return result
 
 			# Do we have a previous page?
-			DocumentModel::hasPrevPage ?= ->
+			templateData.hasPrevPage = (document) ->
 				# Prepare
-				page = @get('page')
+				document ?= @getDocument()
+				page = document.get('page')
 
 				# Check
 				has = page.number > 0
@@ -76,22 +85,27 @@ module.exports = (BasePlugin) ->
 				return has
 
 			# Get the URL of the previous page
-			DocumentModel::getPrevPage ?= ->
+			templateData.getPrevPage = (document) ->
 				# Prepare
-				page = @get('page')
+				document ?= @getDocument()
+				page = document.get('page')
 				result = '#'
 
 				# Check
 				if page.number > 0
-					result = @getPagedUrl(page.number-1)
+					result = @getPageUrl(page.number-1, document)
 
 				# Return
 				return result
+
+			# Done
+			true
 
 		# Render Before
 		renderBeforePriority: 550  # run before clean urls
 		renderBefore: (opts,next) ->
 			# Prepare
+			{TaskGroup} = require('taskgroup')
 			docpad = @docpad
 			{collection,templateData} = opts
 			database = docpad.getDatabase()
@@ -121,7 +135,7 @@ module.exports = (BasePlugin) ->
 
 				# Let the page meta specify count or use 1 by default
 				numberOfPages = document.get('pageCount') or 1
-				pageSize = document.get('pageSize') or 5
+				pageSize = document.get('pageSize') or 1
 				lastDoc = pageSize * numberOfPages
 
 				# if pagedCollection is specified then use that to determine number of pages
@@ -148,6 +162,7 @@ module.exports = (BasePlugin) ->
 				# Create a page object for this page
 				document.setMeta(
 					isPaged: true
+					isPagedAuto: false
 					page:
 						count: numberOfPages
 						size: pageSize
@@ -182,7 +197,6 @@ module.exports = (BasePlugin) ->
 							filename: pageFilename
 							outFilename: pageOutFilename
 						)
-						#console.log 'create', pageDocument.id, pageDocument.attributes
 
 						# Queue the normalization of the new document
 						tasks.addTask (complete) ->

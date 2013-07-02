@@ -39,4 +39,9 @@ require('docpad').require('testers')
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static'
 			removeWhitespace: true
 		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+		}
 	)

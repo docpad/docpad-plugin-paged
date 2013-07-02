@@ -1,5 +1,12 @@
 ## History
 
+- v2.2.0 Unreleased
+	- B/C Break: Streamlined the code with the use of the new DocPad v6.44.0 APIs
+		- This version is incompatible with DocPad versions prior to v6.44
+	- B/C Break: Document prototype extensions are now template helpers instead
+		- So instead of doing `@getDocument().hasPage()` or whatever, do `@hasPage()` directly!
+	- B/C Break: `pageSize` meta data attribute now defaults to `1` instead of `5`
+
 - v2.1.5 June 26, 2013
 	- Repackaged
 
