@@ -1,5 +1,8 @@
 ## History
 
+- v2.1.6 July 2, 2013
+	- Updated supported DocPad versions
+
 - v2.1.5 June 26, 2013
 	- Repackaged
 
