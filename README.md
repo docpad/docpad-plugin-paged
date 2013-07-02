@@ -44,12 +44,24 @@ You will interact with the paged plugin via the following template helpers that 
 - `getNextPage(document ?= @getDocument())`
 - `getPagedUrl(pageNumber ?= 0, document ?= @getDocument())`
 
+It is important to note, that as the paged plugin clones the original document and injects the clones directly into the DocPad database, the extra pages (the clones) could appear in your content listings. To avoid this, be sure that your content listings filter out everything that has: `isPagedAuto: true`. For instance, a custom posts collection with the change applied would probably look like this:
+
+``` coffee
+module.exports =
+	collections:
+		posts: ->
+			@getCollection('html').findAllLive(
+				relativeOutDirPath: 'posts'
+				isPagedAuto: $ne: true
+			)
+```
+
 
 ### Example: Paging a Collection Listing
 
-Here is an example where we say create a `src/documents/index.html.eco` file that pages out our `posts` custom collection.
+Here is an example where we say create a `src/documents/posts.html.eco` file that pages out our `posts` custom collection.
 
-It will create documents for each page for the `posts` collection in groups of 3. The first 3 documents in the collection will be rendered into a file called `index.html` as normal, then the remaining documents from the collection will be rendered into subsequent files `index.1.html`, `index.2.html`, `index.3.html` etc.
+It will create documents for each page for the `posts` collection in groups of 3. The first 3 documents in the collection will be rendered into a file called `posts.html` as normal, then the remaining documents from the collection will be rendered into subsequent files `posts.1.html`, `posts.2.html`, `posts.3.html` etc.
 
 ``` erb
 ---
@@ -75,7 +87,7 @@ pageSize: 3
 <div class="pagination">
 	<ul>
 		<!-- Previous Page Button -->
-		<% if !@hasPrevPage(): %>
+		<% unless @hasPrevPage(): %>
 			<li class="disabled"><span>Prev</span></li>
 		<% else: %>
 			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
@@ -83,15 +95,15 @@ pageSize: 3
 
 		<!-- Page Number Buttons -->
 		<% for pageNumber in [0..@document.page.count-1]: %>
-			<% if @document.page.number == pageNumber: %>
-				<li class="active"><span><%= pageNumber %></span></li>
+			<% if @document.page.number is pageNumber: %>
+				<li class="active"><span><%= pageNumber + 1 %></span></li>
 			<% else: %>
-				<li><a href="<%= @getPagedUrl(pageNumber) %>"><%= pageNumber %></a></li>
+				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
 			<% end %>
 		<% end %>
 
 		<!-- Next Page Button -->
-		<% if !@hasNextPage(): %>
+		<% unless @hasNextPage(): %>
 			<li class="disabled"><span>Next</span></li>
 		<% else: %>
 			<li><a href="<%= @getNextPage() %>">Next</a></li>
@@ -127,23 +139,23 @@ pageSize: 1
 <div class="pagination">
 	<ul>
 		<!-- Previous Page Button -->
-		<% if !@hasPrevPage(): %>
+		<% unless @hasPrevPage(): %>
 			<li class="disabled"><span>Prev</span></li>
 		<% else: %>
 			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
 		<% end %>
 		
 		<!-- Page Number Buttons -->
-		<% for num in [0..@document.page.count-1]: %>
-			<% if @document.page.number == num: %>
-				<li class="active"><span><%= num %></span></li>
+		<% for pageNumber in [0..@document.page.count-1]: %>
+			<% if @document.page.number is pageNumber: %>
+				<li class="active"><span><%= pageNumber + 1 %></span></li>
 			<% else: %>
-				<li><a href="<%= @getPageUrl(num) %>"><%= num %></a></li>
+				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
 			<% end %>
 		<% end %>
 		
 		<!-- Next Page Button -->
-		<% if !@hasNextPage(): %>
+		<% unless @hasNextPage(): %>
 			<li class="disabled"><span>Next</span></li>
 		<% else: %>
 			<li><a href="<%= @getNextPage() %>">Next</a></li>

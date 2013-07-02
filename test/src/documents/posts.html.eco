@@ -1,0 +1,51 @@
+---
+title: 'Blog'
+isPaged: true
+pagedCollection: 'posts'
+pageSize: 2
+---
+
+<!-- Testing Header -->
+<pre><code>
+	Page <%= @document.page.number+1 %> of <%= @document.page.count %>
+	Documents <%= [@document.page.startIdx...@document.page.endIdx].join(', ') %>
+</code></pre>
+
+<!-- Page Content -->
+<% for document in @getCollection('posts').toJSON()[@document.page.startIdx...@document.page.endIdx]: %>
+	<article id="post" class="post">
+		<h1><a href='<%=document.url%>'><%= document.title %></a></h1>
+		<div class="post-date"><%= document.date.toLocaleDateString() %></div>
+		<div class="post-content">
+			<%- document.contentRenderedWithoutLayouts %>
+		</div>
+	</article>
+<% end %>
+
+<!-- Page Listing -->
+<div class="pagination">
+	<ul>
+		<!-- Previous Page Button -->
+		<% if !@hasPrevPage(): %>
+			<li class="disabled"><span>Prev</span></li>
+		<% else: %>
+			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
+		<% end %>
+
+		<!-- Page Number Buttons -->
+		<% for pageNumber in [0..@document.page.count-1]: %>
+			<% if @document.page.number is pageNumber: %>
+				<li class="active"><span><%= pageNumber + 1 %></span></li>
+			<% else: %>
+				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
+			<% end %>
+		<% end %>
+
+		<!-- Next Page Button -->
+		<% if !@hasNextPage(): %>
+			<li class="disabled"><span>Next</span></li>
+		<% else: %>
+			<li><a href="<%= @getNextPage() %>">Next</a></li>
+		<% end %>
+	</ul>
+</div>

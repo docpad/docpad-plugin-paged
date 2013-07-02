@@ -1,0 +1,48 @@
+---
+title: 'Split Pages PAge'
+isPaged: true
+pageCount: 3
+---
+
+<!-- Testing Header -->
+<pre><code>
+	Page <%= @document.page.number+1 %> of <%= @document.page.count %>
+	Documents <%= [@document.page.startIdx...@document.page.endIdx].join(', ') %>
+</code></pre>
+
+<!-- Page Content -->
+<% if @document.page.number is 0: %>
+	first Split page
+<% else if @document.page.number is 1: %>
+	second Split page
+<% else if @document.page.number is 2: %>
+	third Split page
+<% end %>
+
+<!-- Page Listing -->
+<div class="pagination">
+	<ul>
+		<!-- Previous Page Button -->
+		<% unless @hasPrevPage(): %>
+			<li class="disabled"><span>Prev</span></li>
+		<% else: %>
+			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
+		<% end %>
+
+		<!-- Page Number Buttons -->
+		<% for pageNumber in [0..@document.page.count-1]: %>
+			<% if @document.page.number is pageNumber: %>
+				<li class="active"><span><%= pageNumber + 1 %></span></li>
+			<% else: %>
+				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
+			<% end %>
+		<% end %>
+
+		<!-- Next Page Button -->
+		<% unless @hasNextPage(): %>
+			<li class="disabled"><span>Next</span></li>
+		<% else: %>
+			<li><a href="<%= @getNextPage() %>">Next</a></li>
+		<% end %>
+	</ul>
+</div>
