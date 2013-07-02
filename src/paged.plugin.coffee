@@ -17,16 +17,15 @@ module.exports = (BasePlugin) ->
 
 				outExtension = firstPage.get('outExtension')
 				baseName = firstPage.get('basename')
+				firstPageUrl = firstPage.get('firstPageUrl')
 
 				if pageNumber == 0
-					return firstPage.get('url')
-
-				firstPageUrl = firstPage.get('firstPageUrl')
+					return firstPageUrl
 
 				if (firstPageUrl=='/')
 					newUrl = '/index.' + pageNumber + '.html'
 				else
-					newUrl = firstPageUrl.replace(/\.html/,'.'+pageNumber+'.html')
+					newUrl = firstPageUrl + '/index.' + pageNumber + '.html'
 
 				cleanUrls = docpad.getPlugin('cleanurls')
 				if (cleanUrls)
