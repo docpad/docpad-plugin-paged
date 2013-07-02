@@ -9,7 +9,7 @@ This plugin provides [DocPad](https://docpad.org) with Paging. Documents can dec
 ## Install
 
 ```
-docpad install docpad-plugin-paged
+docpad install paged
 ```
 
 
