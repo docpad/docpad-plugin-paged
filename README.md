@@ -118,7 +118,7 @@ pageSize: 1
 <% if @document.page.number is 0: %>
 	first awesome page
 <% else if @document.page.number is 1: %>
-	secodn awesome page
+	second awesome page
 <% else if @document.page.number is 2: %>
 	third awesome page
 <% end %>
