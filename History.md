@@ -1,10 +1,11 @@
 ## History
 
-- v2.2.0 Unreleased
-	- B/C Break: Streamlined the code with the use of the new DocPad v6.44.0 APIs
+- v2.2.0 July 2, 2013
+	- B/C Break: Streamlined the code by using the new DocPad v6.44.0 APIs
 		- This version is incompatible with DocPad versions prior to v6.44
+		- Documents are now injected into the DocPad database, this will now bring broader support for things, but it also means that your pages may show up in your content listing. Refer to the [README](https://github.com/docpad/docpad-plugin-paged) for instructions on how to avoid this.
 	- B/C Break: Document prototype extensions are now template helpers instead
-		- So instead of doing `@getDocument().hasPage()` or whatever, do `@hasPage()` directly!
+		- You now do `@hasPage()` instead of `@getDocument().hasPage()`
 	- B/C Break: `pageSize` meta data attribute now defaults to `1` instead of `5`
 
 - v2.1.6 July 2, 2013
