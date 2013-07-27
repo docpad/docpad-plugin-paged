@@ -116,15 +116,28 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			database = docpad.getDatabase()
 
-			# Completion callback
-			tasks = new TaskGroup()
-			tasks.once('complete', next)  if next
-
 			# Extract
+			filePath = document.getFilePath()
 			pages = (document.get('page')?.pages or [])
 
+			# Check
+			if pages.length is 0
+				next?()
+				return @
+
 			# Log
-			# console.log 'START REMOVE FOR', document.id, document.get('outPath'), pages
+			docpad.log('debug', "Remove pages for:", filePath)
+
+			# Completion callback
+			tasks = new TaskGroup().once 'complete', (err) ->
+				# Check
+				return next?(err)  if err
+
+				# Log
+				docpad.log('debug', "Removed pages for:", filePath)
+
+				# Forward
+				return next?()
 
 			# Queue deletions
 			pages.forEach (pageId) ->
@@ -171,14 +184,30 @@ module.exports = (BasePlugin) ->
 			# Create a new collection to temporarily store our pages to render
 			newPagesToRender = []
 
-			# Completion callback
-			tasks = new TaskGroup().once('complete', next)
-
 			# Fetch the source pages
 			sourcePageDocuments = collection.findAll(
 				isPaged: true
 				isPagedAuto: $ne: true
 			)
+
+			# Check
+			if sourcePageDocuments.length is 0
+				next()
+				return @
+
+			# Log
+			docpad.log('info', "Adding pages for #{sourcePageDocuments.length} documents...")
+
+			# Completion callback
+			tasks = new TaskGroup().once 'complete', (err) ->
+				# Check
+				return next(err)  if err
+
+				# Log
+				docpad.log('info', "Added pages")
+
+				# Forward
+				return next()
 
 			# Remove their existing associated auto pages first
 			sourcePageDocuments.forEach (document) ->
@@ -201,6 +230,7 @@ module.exports = (BasePlugin) ->
 					lastDoc = pagedCollection.length
 
 				# Prepare
+				filePath = document.getFilePath()
 				relativePath = document.get('relativePath')
 				filename = document.get('filename')
 				basename = document.get('basename')
@@ -231,11 +261,16 @@ module.exports = (BasePlugin) ->
 				# Loop over the number of pages we have and generate a clone of this document for each
 				if numberOfPages > 1
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
-						# Create our new page
-						pageDocument = document.clone()
+						# Prepare our new page
 						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
 						pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
 						pageRelativePath = relativePath.replace(filename, pageFilename)
+
+						# Log
+						docpad.log('info', "Creating page #{pageNumber} for #{filePath} at #{pageRelativePath}")
+
+						# Create our new page
+						pageDocument = docpad.cloneModel(document)
 
 						# Apply the new properties
 						pageDocument.attributes.urls = []
@@ -262,10 +297,16 @@ module.exports = (BasePlugin) ->
 							# Check
 							return complete(err)  if err
 
+							# Extract
+							pageFilePath = pageDocument.getFilePath()
+
 							# Log
 							# console.log 'ADD', pageDocument.id, pageDocument.get('outPath')
 							# console.log 'FOR', document.id, document.get('outPath')
 							# console.log '=> ', database.pluck('id').sort().join(',')
+
+							# Log
+							docpad.log('info', "Adding page #{pageNumber} for #{filePath} at #{pageFilePath}")
 
 							# Add it to the list
 							pages.push(pageDocument.id)
@@ -273,6 +314,9 @@ module.exports = (BasePlugin) ->
 							# Add it to the database
 							collection.add(pageDocument)
 							database.add(pageDocument)
+
+							# Log
+							docpad.log('info', "Created and added page #{pageNumber} for #{filePath} at #{pageFilePath}")
 
 							# Log
 							# console.log '=> ', database.pluck('id').sort().join(',')

@@ -1,5 +1,10 @@
 ## History
 
+- v2.2.1 July 27, 2013
+	- Better debugging messages
+	- More efficient algorithm when there are no pages
+	- Uses v6.46.4's new clone APIs to avoid duplicated events for our clone models
+
 - v2.2.0 July 2, 2013
 	- B/C Break: Streamlined the code by using the new DocPad v6.44.0 APIs
 		- This version is incompatible with DocPad versions prior to v6.44

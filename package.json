@@ -1,6 +1,6 @@
 {
 	"name": "docpad-plugin-paged",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "DocPad plugin which adds the ability to render a document out to multiple pages",
 	"homepage": "https://github.com/docpad/docpad-plugin-paged",
 	"keywords": [
@@ -28,14 +28,14 @@
 	},
 	"engines" : {
 		"node": ">=0.4",
-		"docpad": ">=6.44 <7"
+		"docpad": ">=6.46.4 <7"
 	},
 	"dependencies": {
 		"taskgroup": "~3.1.1"
 	},
 	"devDependencies": {
 		"coffee-script": "~1.6.2",
-		"docpad": ">=6.44 <7"
+		"docpad": ">=6.46.4 <7"
 	},
 	"main": "./out/paged.plugin.js",
 	"scripts": {
