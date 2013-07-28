@@ -306,7 +306,7 @@ module.exports = (BasePlugin) ->
 							# console.log '=> ', database.pluck('id').sort().join(',')
 
 							# Log
-							docpad.log('info', "Adding page #{pageNumber} for #{filePath} at #{pageFilePath}")
+							docpad.log('debug', "Adding page #{pageNumber} for #{filePath} at #{pageFilePath}")
 
 							# Add it to the list
 							pages.push(pageDocument.id)
@@ -316,7 +316,7 @@ module.exports = (BasePlugin) ->
 							database.add(pageDocument)
 
 							# Log
-							docpad.log('info', "Created and added page #{pageNumber} for #{filePath} at #{pageFilePath}")
+							docpad.log('debug', "Created and added page #{pageNumber} for #{filePath} at #{pageFilePath}")
 
 							# Log
 							# console.log '=> ', database.pluck('id').sort().join(',')

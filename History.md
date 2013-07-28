@@ -1,5 +1,8 @@
 ## History
 
+- v2.2.2 July 28, 2013
+	- Degraded adding/added page messages to debug level
+
 - v2.2.1 July 27, 2013
 	- Better debugging messages
 	- More efficient algorithm when there are no pages
