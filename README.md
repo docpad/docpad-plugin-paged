@@ -164,6 +164,45 @@ pageSize: 1
 </div>
 ```
 
+### Plugin Configuration Options
+
+#### cleanurl
+
+Set this to _true_ and the plugin will generate clean urls.  This defaults to false.
+
+For normal documents (e.g. archives.html), the generated url pattern will be:
+
+* /archives/
+* /archives/1/
+* /archives/2/
+* /archives/3/
+* etc...
+
+For a document named index.html, the generated url pattern will be:
+
+* /
+* /1/
+* /2/
+* /3/
+* etc...
+
+#### startingPageNumber
+
+This option controls what the page number will be for the first _extra_ page.  It defaults to 1 (e.g. index.html, index.1.html, index.2.html, etc...)  If startingPageNumber = 2, you'd get index.html, index.2.html, index.3.html, etc...
+
+### Other Document-Specific Meta Data Options
+
+#### pagePathPrefix
+
+Set this meta data property to a string to be used as the prefix for any _extra_ files created.  This is useful for a main blog index in combination with the cleanurl and startingPageNumber options.  
+
+For example, for a file named index.html, with pagePathPrefix = 'page', startingPageNumber = 2, and clean urls enabled, you'd get this sequence:
+
+* /
+* /page/2/
+* /page/3/
+* /page/4/
+* etc...
 
 ## History
 [You can discover the history inside the `History.md` file](https://github.com/bevry/docpad-plugin-paged/blob/master/History.md#files)
