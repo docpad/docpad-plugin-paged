@@ -52,6 +52,6 @@
     "paypal": "QB8GQPZAH84N6"
   },
   "peerDependencies": {
-    "docpad": "6"
+    "docpad": ">=6.46.4 <7"
   }
 }
