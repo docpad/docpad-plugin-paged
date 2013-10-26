@@ -15,7 +15,6 @@ pageSize: 2
 <% for document in @getCollection('posts').toJSON()[@document.page.startIdx...@document.page.endIdx]: %>
 	<article id="post" class="post">
 		<h1><a href='<%=document.url%>'><%= document.title %></a></h1>
-		<div class="post-date"><%= document.date.toLocaleDateString() %></div>
 		<div class="post-content">
 			<%- document.contentRenderedWithoutLayouts %>
 		</div>

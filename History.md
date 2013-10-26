@@ -1,5 +1,8 @@
 ## History
 
+- v2.2.3 October 26, 2013
+	- Updated dependencies
+
 - v2.2.2 July 28, 2013
 	- Degraded adding/added page messages to debug level
 
@@ -23,15 +26,14 @@
 	- Repackaged
 
 - v2.1.4 April 5, 2013
-	- Dependency upgrades
+	- Updated dependencies
 
 - v2.1.3 March 7, 2013
-	- Dependency upgrades
+	- Updated dependencies
 
 - v2.1.2 March 7, 2013
 	- Repackaged
-	- Dependency upgrades
-		-  `bal-util` from ~1.16.1 to ~1.16.8
+	- Updated dependencies
 
 - v2.1.1 February 8, 2013
 	- Switched repo to [Docpad organization](https://github.com/docpad/docpad-plugin-paged)

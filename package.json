@@ -1,44 +1,56 @@
 {
-	"name": "docpad-plugin-paged",
-	"version": "2.2.2",
-	"description": "DocPad plugin which adds the ability to render a document out to multiple pages",
-	"homepage": "https://github.com/docpad/docpad-plugin-paged",
-	"keywords": [
-		"docpad",
-		"docpad-plugin",
-		"paging",
-		"pagination",
-		"paged"
-	],
-	"author": "Ben Delarre <ben@delarre.net> (http://www.delarre.net)",
-	"maintainers": [
-		"Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
-		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
-	],
-	"contributors": [
-		"Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
-		"Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
-	],
-	"bugs": {
-		"url": "https://github.com/docpad/docpad-plugin-paged/issues"
-	},
-	"repository" : {
-		"type": "git",
-		"url": "http://github.com/docpad/docpad-plugin-paged.git"
-	},
-	"engines" : {
-		"node": ">=0.4",
-		"docpad": ">=6.46.4 <7"
-	},
-	"dependencies": {
-		"taskgroup": "~3.1.1"
-	},
-	"devDependencies": {
-		"coffee-script": "~1.6.2",
-		"docpad": ">=6.46.4 <7"
-	},
-	"main": "./out/paged.plugin.js",
-	"scripts": {
-		"test": "node ./out/paged.test.js"
-	}
+  "title": "Paged Plugin for [DocPad](http://docpad.org)",
+  "name": "docpad-plugin-paged",
+  "version": "2.2.3",
+  "description": "DocPad plugin which adds the ability to render a document out to multiple pages",
+  "homepage": "https://github.com/docpad/docpad-plugin-paged",
+  "keywords": [
+    "docpad",
+    "docpad-plugin",
+    "paging",
+    "pagination",
+    "paged"
+  ],
+  "author": "2012+ Ben Delarre <ben@delarre.net> (http://www.delarre.net)",
+  "maintainers": [
+    "Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ],
+  "contributors": [
+    "Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+  ],
+  "bugs": {
+    "url": "https://github.com/docpad/docpad-plugin-paged/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/docpad/docpad-plugin-paged.git"
+  },
+  "engines": {
+    "node": ">=0.4",
+    "docpad": ">=6.46.4 <7"
+  },
+  "dependencies": {
+    "taskgroup": "~3.2.3"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.2",
+    "docpad": ">=6.46.4 <7",
+    "projectz": "~0.2.3"
+  },
+  "main": "./out/paged.plugin.js",
+  "scripts": {
+    "test": "node ./out/paged.test.js"
+  },
+  "license": {
+    "type": "MIT"
+  },
+  "badges": {
+    "travis": true,
+    "npm": true,
+    "gittip": "bevry",
+    "flattr": "344188/balupton-on-Flattr",
+    "paypal": "QB8GQPZAH84N6"
+  }
 }

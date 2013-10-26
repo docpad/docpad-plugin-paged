@@ -1,7 +1,21 @@
+
+<!-- TITLE/ -->
+
 # Paged Plugin for [DocPad](http://docpad.org)
 
-[![Build Status](https://secure.travis-ci.org/docpad/docpad-plugin-paged.png?branch=master)](http://travis-ci.org/docpad/docpad-plugin-paged "Check this project's build status on TravisCI")
+<!-- /TITLE -->
+
+
+<!-- BADGES/ -->
+
+[![Build Status](http://img.shields.io/travis-ci/docpad/docpad-plugin-paged.png?branch=master)](http://travis-ci.org/docpad/docpad-plugin-paged "Check this project's build status on TravisCI")
 [![NPM version](https://badge.fury.io/js/docpad-plugin-paged.png)](https://npmjs.org/package/docpad-plugin-paged "View this project on NPM")
+[![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
+[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
+[![PayPayl donate button](https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+
+<!-- /BADGES -->
+
 
 This plugin provides [DocPad](https://docpad.org) with Paging. Documents can declare a number of pages that should be rendered for the document, or a collection over which the document should be rendered repeatedly.
 
@@ -165,14 +179,62 @@ pageSize: 1
 ```
 
 
+<!-- HISTORY/ -->
+
 ## History
-[You can discover the history inside the `History.md` file](https://github.com/bevry/docpad-plugin-paged/blob/master/History.md#files)
+[Discover the change history by heading on over to the `History.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/History.md#files)
+
+<!-- /HISTORY -->
 
 
-## Contributing
-[You can discover the contributing instructions inside the `Contributing.md` file](https://github.com/bevry/docpad-plugin-paged/blob/master/Contributing.md#files)
+<!-- CONTRIBUTE/ -->
 
+## Contribute
+
+[Discover how you can contribute by heading on over to the `Contributing.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/Contributing.md#files)
+
+<!-- /CONTRIBUTE -->
+
+
+<!-- BACKERS/ -->
+
+## Backers
+
+### Maintainers
+
+These amazing people are maintaining this project:
+
+- Ben Delarre <ben@delarre.net> (https://github.com/benjamind)
+- Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)
+
+### Sponsors
+
+No sponsors yet! Will you be the first?
+
+[![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
+[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
+[![PayPayl donate button](https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+
+### Contributors
+
+These amazing people have contributed code to this project:
+
+- Ben Delarre <ben@delarre.net> (https://github.com/benjamind) - [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=benjamind)
+- Benjamin Lupton <b@lupton.cc> (https://github.com/balupton) - [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=balupton)
+
+[Become a contributor!](https://github.com/docpad/docpad-plugin-paged/blob/master/Contributing.md#files)
+
+<!-- /BACKERS -->
+
+
+<!-- LICENSE/ -->
 
 ## License
-Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT License](http://creativecommons.org/licenses/MIT/)
-<br/>Copyright &copy; 2012+ [Ben Delarre](http://delarre.net) <ben@delarre.net>
+
+Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/)
+
+Copyright &copy; 2012+ Ben Delarre <ben@delarre.net> (http://www.delarre.net)
+
+<!-- /LICENSE -->
+
+
