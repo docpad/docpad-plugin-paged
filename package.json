@@ -36,7 +36,6 @@
   },
   "devDependencies": {
     "coffee-script": "~1.6.2",
-    "docpad": ">=6.46.4 <7",
     "projectz": "~0.2.3"
   },
   "main": "./out/paged.plugin.js",
@@ -52,5 +51,8 @@
     "gittip": "bevry",
     "flattr": "344188/balupton-on-Flattr",
     "paypal": "QB8GQPZAH84N6"
+  },
+  "peerDependencies": {
+    "docpad": "6"
   }
 }
