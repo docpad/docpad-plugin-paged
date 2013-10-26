@@ -28,8 +28,7 @@
     "url": "http://github.com/docpad/docpad-plugin-paged.git"
   },
   "engines": {
-    "node": ">=0.4",
-    "docpad": ">=6.46.4 <7"
+    "node": ">=0.4"
   },
   "dependencies": {
     "taskgroup": "~3.2.3"
