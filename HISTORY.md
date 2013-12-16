@@ -1,4 +1,8 @@
-## History
+# History
+
+- v2.2.4 December 16, 2013
+	- Added `getPageCollection(name)` template helper
+	- Updated dependencies
 
 - v2.2.3 October 26, 2013
 	- Updated dependencies

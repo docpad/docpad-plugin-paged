@@ -32,6 +32,15 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			{templateData} = opts
 
+			# Get a collection of the models on the current page
+			templateData.getPageCollection = (collectionName, start, finish) ->
+				collectionName ?= 'html'
+				collection = @getCollection(collectionName)
+				start ?= @document.page?.startIdx or 0
+				finish ?= @document.page?.endIdx or collection.models.length
+				subCollection = new docpad.FilesCollection(collection.models[start...finish])
+				return subCollection
+
 			# Get the url of the desired page
 			templateData.getPageUrl = (pageNumber, document) ->
 				# Prepare

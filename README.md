@@ -9,10 +9,10 @@
 <!-- BADGES/ -->
 
 [![Build Status](http://img.shields.io/travis-ci/docpad/docpad-plugin-paged.png?branch=master)](http://travis-ci.org/docpad/docpad-plugin-paged "Check this project's build status on TravisCI")
-[![NPM version](https://badge.fury.io/js/docpad-plugin-paged.png)](https://npmjs.org/package/docpad-plugin-paged "View this project on NPM")
+[![NPM version](http://badge.fury.io/js/docpad-plugin-paged.png)](https://npmjs.org/package/docpad-plugin-paged "View this project on NPM")
 [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
-[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
-[![PayPayl donate button](https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![Flattr donate button](http://img.shields.io/flattr/donate.png?color=yellow)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
+[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
 
 <!-- /BADGES -->
 
@@ -87,7 +87,7 @@ pageSize: 3
 ---
 
 <!-- Page Content -->
-<% for document in @getCollection('posts').toJSON()[@document.page.startIdx...@document.page.endIdx]: %>
+<% for document in @getPageCollection('posts').toJSON(): %>
 	<article id="post" class="post">
 		<h1><a href='<%=document.url%>'><%= document.title %></a></h1>
 		<div class="post-date"><%= document.date.toLocaleDateString() %></div>
@@ -182,7 +182,7 @@ pageSize: 1
 <!-- HISTORY/ -->
 
 ## History
-[Discover the change history by heading on over to the `History.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/History.md#files)
+[Discover the change history by heading on over to the `HISTORY.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/HISTORY.md#files)
 
 <!-- /HISTORY -->
 
@@ -191,7 +191,7 @@ pageSize: 1
 
 ## Contribute
 
-[Discover how you can contribute by heading on over to the `Contributing.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/Contributing.md#files)
+[Discover how you can contribute by heading on over to the `CONTRIBUTING.md` file.](https://github.com/docpad/docpad-plugin-paged/blob/master/CONTRIBUTING.md#files)
 
 <!-- /CONTRIBUTE -->
 
@@ -212,8 +212,8 @@ These amazing people are maintaining this project:
 No sponsors yet! Will you be the first?
 
 [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
-[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
-[![PayPayl donate button](https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![Flattr donate button](http://img.shields.io/flattr/donate.png?color=yellow)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
+[![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
 
 ### Contributors
 
@@ -222,7 +222,7 @@ These amazing people have contributed code to this project:
 - Ben Delarre <ben@delarre.net> (https://github.com/benjamind) - [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=benjamind)
 - Benjamin Lupton <b@lupton.cc> (https://github.com/balupton) - [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=balupton)
 
-[Become a contributor!](https://github.com/docpad/docpad-plugin-paged/blob/master/Contributing.md#files)
+[Become a contributor!](https://github.com/docpad/docpad-plugin-paged/blob/master/CONTRIBUTING.md#files)
 
 <!-- /BACKERS -->
 
