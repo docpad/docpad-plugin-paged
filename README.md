@@ -115,7 +115,7 @@ pageSize: 3
 			<% if @document.page.number is pageNumber: %>
 				<li class="active"><span><%= pageNumber + 1 %></span></li>
 			<% else: %>
-				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
+				<li><a href="<%= @getPagedUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
 			<% end %>
 		<% end %>
 
