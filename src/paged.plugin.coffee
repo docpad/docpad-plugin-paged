@@ -279,7 +279,7 @@ module.exports = (BasePlugin) ->
 						docpad.log('info', "Creating page #{pageNumber} for #{filePath} at #{pageRelativePath}")
 
 						# Create our new page
-						pageDocument = docpad.cloneModel(document)
+						pageDocument = docpad.cloneModel?(document) ? document.clone()
 
 						# Apply the new properties
 						pageDocument.attributes.urls = []

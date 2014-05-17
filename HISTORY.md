@@ -1,5 +1,9 @@
 # History
 
+- v2.2.5 December 16, 2013
+	- DocPad v6.65 compatibility
+	- Updated dependencies
+
 - v2.2.4 December 16, 2013
 	- Added `getPageCollection(name)` template helper
 	- Updated dependencies

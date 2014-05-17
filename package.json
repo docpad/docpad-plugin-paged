@@ -1,7 +1,7 @@
 {
   "title": "Paged Plugin for [DocPad](http://docpad.org)",
   "name": "docpad-plugin-paged",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "DocPad plugin which adds the ability to render a document out to multiple pages",
   "homepage": "https://github.com/docpad/docpad-plugin-paged",
   "keywords": [
@@ -18,7 +18,8 @@
   ],
   "contributors": [
     "Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
+    "RobLoach (https://github.com/RobLoach)"
   ],
   "bugs": {
     "url": "https://github.com/docpad/docpad-plugin-paged/issues"
@@ -34,11 +35,11 @@
     "docpad": ">=6.46.4 <7"
   },
   "dependencies": {
-    "taskgroup": "~3.3.6"
+    "taskgroup": "~3.4.0"
   },
   "devDependencies": {
     "docpad": ">=6.46.4 <7",
-    "coffee-script": "~1.6.2",
+    "coffee-script": "~1.7.1",
     "projectz": "~0.3.9"
   },
   "main": "./out/paged.plugin.js",
@@ -56,6 +57,10 @@
     "gittip": "docpad",
     "flattr": "344188/balupton-on-Flattr",
     "paypal": "QB8GQPZAH84N6",
-    "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a"
+    "bitcoin": "https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a",
+    "wishlist": "http://amzn.com/w/2F8TXKSNAFG4V"
+  },
+  "cakeConfiguration": {
+    "COFFEE_SRC_PATH": "src"
   }
 }
