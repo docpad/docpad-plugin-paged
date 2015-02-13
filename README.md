@@ -163,7 +163,7 @@ pageSize: 1
 		<% else: %>
 			<li><a href="<%= @getPrevPage() %>">Prev</a></li>
 		<% end %>
-		
+
 		<!-- Page Number Buttons -->
 		<% for pageNumber in [0..@document.page.count-1]: %>
 			<% if @document.page.number is pageNumber: %>
@@ -172,7 +172,7 @@ pageSize: 1
 				<li><a href="<%= @getPageUrl(pageNumber) %>"><%= pageNumber + 1 %></a></li>
 			<% end %>
 		<% end %>
-		
+
 		<!-- Next Page Button -->
 		<% unless @hasNextPage(): %>
 			<li class="disabled"><span>Next</span></li>
@@ -183,6 +183,31 @@ pageSize: 1
 </div>
 ```
 
+## Configure
+For information on customising your plugin configuration you can refer to the [DocPad FAQ](https://github.com/bevry/docpad/wiki/FAQ)
+
+### Clean URLs
+You can customise integration with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) by setting custom preferences. The default configuration is:
+
+	cleanurl: false
+
+Set `cleanurl: true` and the plugin will generate clean urls.
+
+For normal documents (e.g. archives.html), the generated url pattern will be:
+
+* /archives/
+* /archives/1/
+* /archives/2/
+* /archives/3/
+* etc...
+
+For a document named index.html, the generated url pattern will be:
+
+* /
+* /1/
+* /2/
+* /3/
+* etc...
 
 <!-- HISTORY/ -->
 

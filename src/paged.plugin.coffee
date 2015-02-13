@@ -2,11 +2,16 @@
 module.exports = (BasePlugin) ->
 	# Requires
 	{TaskGroup} = require('taskgroup')
+	path = require('path')
 
 	# Define Plugin
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
 		name: 'paged'
+
+		# Default Configuration
+		config:
+			cleanurl: false
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
@@ -189,6 +194,7 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			{collection,templateData} = opts
 			database = docpad.getDatabase()
+			config = @config
 
 			# Create a new collection to temporarily store our pages to render
 			newPagesToRender = []
@@ -271,9 +277,15 @@ module.exports = (BasePlugin) ->
 				if numberOfPages > 1
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
 						# Prepare our new page
-						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
-						pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
-						pageRelativePath = relativePath.replace(filename, pageFilename)
+						if config.cleanurl
+							pageFilename = "index.#{extension}"
+							pageOutFilename = "index.#{outExtension}"
+							pagePathBasename = if basename is 'index' then '' else basename
+							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, pageNumber.toString(), pageFilename
+						else
+							pageFilename = "#{basename}-#{pageNumber}.#{extension}"
+							pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
+							pageRelativePath = relativePath.replace(filename, pageFilename)
 
 						# Log
 						docpad.log('info', "Creating page #{pageNumber} for #{filePath} at #{pageRelativePath}")
