@@ -35,16 +35,16 @@ require('docpad').require('testers')
 				'cleanurls': false
 			plugins:
 				paged:
-					pagePrefix: 'page'
+					prefix: 'page'
 		}
 	).test(
 		# Test Configuration
 		{
-			testerName: 'paged without cleanurls and different starting number'
+			testerName: 'paged without cleanurls and different index'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-startnum'
+			outExpectedPath: __dirname+'/../test/out-expected-index'
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
@@ -55,7 +55,7 @@ require('docpad').require('testers')
 				'cleanurls': false
 			plugins:
 				paged:
-					startNum: 2
+					index: 1
 		}
 	)
 	.test(
@@ -106,17 +106,17 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					cleanurl: true
-					pagePrefix: 'page'
+					prefix: 'page'
 		}
 	)
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with cleanurl enabled and different starting number'
+			testerName: 'paged with cleanurls with cleanurl enabled and different index'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-cleanurl-startnum'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-cleanurl-index'
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
@@ -126,7 +126,7 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					cleanurl: true
-					startNum: 2
+					index: 1
 		}
 	)
 	.test(
@@ -181,17 +181,17 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					cleanurl: true
-					pagePrefix: 'page'
+					prefix: 'page'
 		}
 	)
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls on static with cleanurl enabled and different starting number'
+			testerName: 'paged with cleanurls on static with cleanurl enabled and different index'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-static-cleanurl-startnum'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-cleanurl-index'
 			removeWhitespace: true
 		}
 
@@ -201,6 +201,6 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					cleanurl: true
-					startNum: 2
+					index: 1
 		}
 	)
