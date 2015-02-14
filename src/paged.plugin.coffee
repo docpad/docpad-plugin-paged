@@ -11,7 +11,7 @@ module.exports = (BasePlugin) ->
 
 		# Default Configuration
 		config:
-			cleanurl: false
+			split: false
 			prefix: ''
 			index: 0
 
@@ -280,7 +280,7 @@ module.exports = (BasePlugin) ->
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
 						# Prepare our new page
 						newPageNumber = pageNumber + config.index
-						if config.cleanurl
+						if config.split
 							pageFilename = "index.#{extension}"
 							pageOutFilename = "index.#{outExtension}"
 							pagePathBasename = if basename is 'index' then '' else basename

@@ -188,14 +188,36 @@ pageSize: 1
 ## Configure
 For information on customising your plugin configuration you can refer to the [DocPad FAQ](https://github.com/bevry/docpad/wiki/FAQ)
 
-### Clean URLs
-You can customise integration with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) by setting custom preferences. The default configuration is:
+You can customise the URL format by setting custom preferences. The default configuration is:
 
-	cleanurl: false
+	split: false
 	prefix: ''
 	index: 0
+	
+The examples below are with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) installed to remove the file extensions, but each option also works without it. Each option is also compatible with CLean URLs Plugin's static redirection generation.
 
-Set `cleanurl: true` and the plugin will generate clean urls.
+### split
+
+`split: false`: The url will be one single part
+
+For normal documents (e.g. archives.html), the generated url pattern will be:
+
+* /archives
+* /archives.1/
+* /archives.2/
+* /archives.3/
+* etc...
+
+For a document named index.html, the generated url pattern will be:
+
+* /
+* index.1/
+* index.2/
+* index.3/
+* etc...
+
+
+`split: true`: The url will be split into multple parts
 
 For normal documents (e.g. archives.html), the generated url pattern will be:
 
@@ -213,6 +235,8 @@ For a document named index.html, the generated url pattern will be:
 * /3/
 * etc...
 
+### prefix
+
 Set `prefix` to add a prefix path to the page numbers.
 
 For example, after setting `prefix: 'page'`, the generated url pattern will be:
@@ -223,9 +247,29 @@ For example, after setting `prefix: 'page'`, the generated url pattern will be:
 * /archives/page/3/
 * etc...
 
+### index
+
 Set `index` to set the page number for the index page.
 
 For example, after setting `index: 1`, the generated url pattern will be:
+
+* /archives/
+* /archives/2/
+* /archives/3/
+* /archives/4/
+* etc...
+
+### Combining settings
+
+The settings can be combined to create alternative URL structure. For example, if we configure the plugin with the following options:
+
+```
+split: true
+prefix: page
+index: 1
+```
+
+The generated url pattern will be:
 
 * /archives/
 * /archives/page/2/
