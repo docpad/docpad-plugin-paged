@@ -190,6 +190,7 @@ For information on customising your plugin configuration you can refer to the [D
 You can customise integration with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) by setting custom preferences. The default configuration is:
 
 	cleanurl: false
+	pagePrefix: ''
 
 Set `cleanurl: true` and the plugin will generate clean urls.
 
@@ -207,6 +208,16 @@ For a document named index.html, the generated url pattern will be:
 * /1/
 * /2/
 * /3/
+* etc...
+
+Set `pagePrefix` to add a prefix path to the page numbers.
+
+For example, aftersetting `pagePrefix: 'page'`, the generated url pattern will be:
+
+* /archives/
+* /archives/page/1/
+* /archives/page/2/
+* /archives/page/3/
 * etc...
 
 <!-- HISTORY/ -->

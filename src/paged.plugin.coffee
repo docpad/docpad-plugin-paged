@@ -12,6 +12,7 @@ module.exports = (BasePlugin) ->
 		# Default Configuration
 		config:
 			cleanurl: false
+			pagePrefix: ''
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
@@ -278,10 +279,12 @@ module.exports = (BasePlugin) ->
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
 						# Prepare our new page
 						if config.cleanurl
+							# need to disable cleanurl's static property
+							# https://github.com/docpad/docpad-plugin-cleanurls
 							pageFilename = "index.#{extension}"
 							pageOutFilename = "index.#{outExtension}"
 							pagePathBasename = if basename is 'index' then '' else basename
-							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, pageNumber.toString(), pageFilename
+							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, config.pagePrefix, pageNumber.toString(), pageFilename
 						else
 							pageFilename = "#{basename}-#{pageNumber}.#{extension}"
 							pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
