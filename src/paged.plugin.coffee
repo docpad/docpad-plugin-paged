@@ -13,6 +13,7 @@ module.exports = (BasePlugin) ->
 		config:
 			cleanurl: false
 			pagePrefix: ''
+			startNum: 1
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
@@ -284,7 +285,7 @@ module.exports = (BasePlugin) ->
 							pageFilename = "index.#{extension}"
 							pageOutFilename = "index.#{outExtension}"
 							pagePathBasename = if basename is 'index' then '' else basename
-							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, config.pagePrefix, pageNumber.toString(), pageFilename
+							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, config.pagePrefix, (pageNumber + config.startNum - 1).toString(), pageFilename
 						else
 							pageFilename = "#{basename}-#{pageNumber}.#{extension}"
 							pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"

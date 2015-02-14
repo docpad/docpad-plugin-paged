@@ -183,6 +183,8 @@ pageSize: 1
 </div>
 ```
 
+<!-- CONFIGURE/ -->
+
 ## Configure
 For information on customising your plugin configuration you can refer to the [DocPad FAQ](https://github.com/bevry/docpad/wiki/FAQ)
 
@@ -191,6 +193,7 @@ You can customise integration with the [Clean URLs Plugin](https://github.com/do
 
 	cleanurl: false
 	pagePrefix: ''
+	startNum: 1
 
 Set `cleanurl: true` and the plugin will generate clean urls.
 
@@ -212,13 +215,25 @@ For a document named index.html, the generated url pattern will be:
 
 Set `pagePrefix` to add a prefix path to the page numbers.
 
-For example, aftersetting `pagePrefix: 'page'`, the generated url pattern will be:
+For example, after setting `pagePrefix: 'page'`, the generated url pattern will be:
 
 * /archives/
 * /archives/page/1/
 * /archives/page/2/
 * /archives/page/3/
 * etc...
+
+Set `startNum` to set the initial page number.
+
+For example, after setting `startNum: 2`, the generated url pattern will be:
+
+* /archives/
+* /archives/page/2/
+* /archives/page/3/
+* /archives/page/4/
+* etc...
+
+<!-- /CONFIGURE -->
 
 <!-- HISTORY/ -->
 
