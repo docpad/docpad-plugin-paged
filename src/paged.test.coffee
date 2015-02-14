@@ -89,7 +89,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with cleanurl'
+			testerName: 'paged with cleanurls with cleanurl enabled'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
@@ -108,7 +108,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with cleanurl and prefix'
+			testerName: 'paged with cleanurls with cleanurl enabled and prefix'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
@@ -128,7 +128,7 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with cleanurl and different starting number'
+			testerName: 'paged with cleanurls with cleanurl enabled and different starting number'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
