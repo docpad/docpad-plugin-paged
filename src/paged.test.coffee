@@ -73,22 +73,6 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls on static'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
-			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-static'
-			removeWhitespace: true
-		}
-
-		# DocPad Configuration
-		{
-			env: 'static'
-		}
-	)
-	.test(
-		# Test Configuration
-		{
 			testerName: 'paged with cleanurls with cleanurl enabled'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
@@ -143,5 +127,40 @@ require('docpad').require('testers')
 				paged:
 					cleanurl: true
 					startNum: 2
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls on static'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls on static with cleanurl enabled'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-cleanurl'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+			plugins:
+				paged:
+					cleanurl: true
 		}
 	)
