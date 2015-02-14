@@ -20,6 +20,27 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
+			testerName: 'paged without cleanurls with cleanurl enabled'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-cleanurl'
+			autoExit: 'safe'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			enabledPlugins:
+				'cleanurls': false
+			plugins:
+				paged:
+					cleanurl: true
+		}
+	)
+	.test(
+		# Test Configuration
+		{
 			testerName: 'paged without cleanurls and prefix'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
