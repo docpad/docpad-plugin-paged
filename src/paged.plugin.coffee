@@ -288,8 +288,8 @@ module.exports = (BasePlugin) ->
 							pagePathBasename = if basename is 'index' then '' else basename
 							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, config.pagePrefix, newPageNumber.toString(), pageFilename
 						else
-							pageFilename = "#{basename}-#{newPageNumber}.#{extension}"
-							pageOutFilename = "#{outBasename}.#{newPageNumber}.#{outExtension}"
+							pageFilename = "#{basename}-#{config.pagePrefix}#{newPageNumber}.#{extension}"
+							pageOutFilename = "#{outBasename}.#{config.pagePrefix}#{newPageNumber}.#{outExtension}"
 							pageRelativePath = relativePath.replace(filename, pageFilename)
 
 						# Log
