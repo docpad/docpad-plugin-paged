@@ -20,11 +20,32 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged without cleanurls with split enabled'
+			testerName: 'paged without cleanurls with split disabled'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-split'
+			autoExit: 'safe'
+			outExpectedPath: __dirname+'/../test/out-expected-nosplit'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			enabledPlugins:
+				'cleanurls': false
+			plugins:
+				paged:
+					split: false
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged without cleanurls with index'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-index'
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
@@ -35,13 +56,13 @@ require('docpad').require('testers')
 				'cleanurls': false
 			plugins:
 				paged:
-					split: true
+					index: 0
 		}
 	)
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged without cleanurls and prefix'
+			testerName: 'paged without cleanurls with prefix'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
@@ -57,26 +78,6 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					prefix: 'page'
-		}
-	).test(
-		# Test Configuration
-		{
-			testerName: 'paged without cleanurls and different index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
-			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-index'
-			autoExit: 'safe'
-			removeWhitespace: true
-		}
-
-		# DocPad Configuration
-		{
-			enabledPlugins:
-				'cleanurls': false
-			plugins:
-				paged:
-					index: 1
 		}
 	)
 	.test(
@@ -94,11 +95,11 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with split enabled'
+			testerName: 'paged with cleanurls with split disabled'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-split'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-nosplit'
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
@@ -107,17 +108,17 @@ require('docpad').require('testers')
 		{
 			plugins:
 				paged:
-					split: true
+					split: false
 		}
 	)
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls with split enabled and prefix'
+			testerName: 'paged with cleanurls with index'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-split-prefix'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-index'
 			autoExit: 'safe'
 			removeWhitespace: true
 		}
@@ -126,28 +127,26 @@ require('docpad').require('testers')
 		{
 			plugins:
 				paged:
-					split: true
+					index: 0
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls with prefix'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-prefix'
+			autoExit: 'safe'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			plugins:
+				paged:
 					prefix: 'page'
-		}
-	)
-	.test(
-		# Test Configuration
-		{
-			testerName: 'paged with cleanurls with split enabled and different index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
-			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-split-index'
-			autoExit: 'safe'
-			removeWhitespace: true
-		}
-
-		# DocPad Configuration
-		{
-			plugins:
-				paged:
-					split: true
-					index: 1
 		}
 	)
 	.test(
@@ -169,11 +168,11 @@ require('docpad').require('testers')
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls on static with split enabled'
+			testerName: 'paged with cleanurls on static with split disabled'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-static-split'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-nosplit'
 			removeWhitespace: true
 		}
 
@@ -182,17 +181,17 @@ require('docpad').require('testers')
 			env: 'static'
 			plugins:
 				paged:
-					split: true
+					split: false
 		}
 	)
 	.test(
 		# Test Configuration
 		{
-			testerName: 'paged with cleanurls on static with split enabled and prefix'
+			testerName: 'paged with cleanurls on static with index'
 			testerClass: 'RendererTester'
 			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-static-split-prefix'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-index'
 			removeWhitespace: true
 		}
 
@@ -201,27 +200,25 @@ require('docpad').require('testers')
 			env: 'static'
 			plugins:
 				paged:
-					split: true
+					index: 0
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls on static with prefix'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-prefix'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+			plugins:
+				paged:
 					prefix: 'page'
-		}
-	)
-	.test(
-		# Test Configuration
-		{
-			testerName: 'paged with cleanurls on static with split enabled and different index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
-			pluginName: 'paged'
-			outExpectedPath: __dirname+'/../test/out-expected-clean-static-split-index'
-			removeWhitespace: true
-		}
-
-		# DocPad Configuration
-		{
-			env: 'static'
-			plugins:
-				paged:
-					split: true
-					index: 1
 		}
 	)

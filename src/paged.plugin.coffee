@@ -11,9 +11,9 @@ module.exports = (BasePlugin) ->
 
 		# Default Configuration
 		config:
-			split: false
+			split: true
+			index: 1
 			prefix: ''
-			index: 0
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
