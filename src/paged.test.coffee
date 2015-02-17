@@ -56,7 +56,7 @@ require('docpad').require('testers')
 				'cleanurls': false
 			plugins:
 				paged:
-					index: 0
+					index: 4
 		}
 	)
 	.test(
@@ -127,7 +127,7 @@ require('docpad').require('testers')
 		{
 			plugins:
 				paged:
-					index: 0
+					index: 4
 		}
 	)
 	.test(
@@ -163,6 +163,9 @@ require('docpad').require('testers')
 		# DocPad Configuration
 		{
 			env: 'static'
+			plugins:
+				paged:
+					index: 0 # prevent compatibility check failing
 		}
 	)
 	.test(
@@ -182,6 +185,7 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					split: false
+					index: 0 # prevent compatibility check failing
 		}
 	)
 	.test(
@@ -200,7 +204,7 @@ require('docpad').require('testers')
 			env: 'static'
 			plugins:
 				paged:
-					index: 0
+					index: 4
 		}
 	)
 	.test(
@@ -220,5 +224,46 @@ require('docpad').require('testers')
 			plugins:
 				paged:
 					prefix: 'page'
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls on static with compatibility off'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-nocompat'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+			plugins:
+				paged:
+					compatibility: false
+		}
+	)
+	.test(
+		# Test Configuration
+		{
+			testerName: 'paged with cleanurls on static with non-backwards compatible format'
+			testerClass: 'RendererTester'
+			pluginPath: __dirname+'/..'
+			pluginName: 'paged'
+			outExpectedPath: __dirname+'/../test/out-expected-clean-static-noback'
+			removeWhitespace: true
+		}
+
+		# DocPad Configuration
+		{
+			env: 'static'
+			plugins:
+				paged:
+					split: false
+					index: 1
+					prefix: ''
+					compatibility: true
 		}
 	)

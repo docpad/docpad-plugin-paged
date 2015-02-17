@@ -193,6 +193,7 @@ You can customise the URL format by setting custom preferences. The default conf
 	split: true
 	prefix: ''
 	index: 1
+	compatibility: true
 	
 The examples below are with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) installed to remove the file extensions, but each option also works without it. Each option is also compatible with CLean URLs Plugin's static redirection generation.
 
@@ -265,6 +266,28 @@ For example, after setting `prefix: 'page'`, the generated url pattern will be:
 * /archives/page/3/
 * /archives/page/4/
 * etc...
+
+### compatibility
+
+Set `compatibility: true` to maintain backwards compatbility with the older URL structure.
+
+For example, when combined with `prefix: 'page'` and `index: 1`, the generated url will be:
+
+* /archives/
+* /archives/page/2/ (also available at /archives.1/)
+* /archives/page/3/ (also available at /archives.2/)
+* /archives/page/4/ (also available at /archives.3/)
+
+**NOTE**: There is one configuration combination in which backwards-compatibility will not be enabled:
+
+    split: false
+    index: [anything other than 0]
+    prefix: ''
+    compatibility: true
+    
+Setting your configuration to the above will not create the secondary url for each page, to prevent it clashing with the primary url. 
+
+Set `compatibility: false` to prevent the additional urls being generated.
 
 ### Combining settings
 
