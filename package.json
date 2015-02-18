@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "docpad": ">=6.46.4 <7",
-    "coffee-script": "~1.8.0",
-    "projectz": "~0.3.17"
+    "coffee-script": "^1.9.0",
+    "projectz": "^0.4.2"
   },
   "main": "./out/paged.plugin.js",
   "scripts": {
