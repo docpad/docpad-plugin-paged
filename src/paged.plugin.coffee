@@ -2,11 +2,16 @@
 module.exports = (BasePlugin) ->
 	# Requires
 	{TaskGroup} = require('taskgroup')
+	path = require('path')
 
 	# Define Plugin
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
 		name: 'paged'
+
+		config:
+			cleanurl: false
+			startingPageNumber: 1
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
@@ -189,6 +194,7 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			{collection,templateData} = opts
 			database = docpad.getDatabase()
+			config = @config
 
 			# Create a new collection to temporarily store our pages to render
 			newPagesToRender = []
@@ -230,6 +236,7 @@ module.exports = (BasePlugin) ->
 				numberOfPages = meta.get('pageCount') or 1
 				pageSize = meta.get('pageSize') or 1
 				lastDoc = pageSize * numberOfPages
+				pagePathPrefix = meta.get('pagePathPrefix') or ''
 
 				# if pagedCollection is specified then use that to determine number of pages
 				if meta.get('pagedCollection')
@@ -271,9 +278,21 @@ module.exports = (BasePlugin) ->
 				if numberOfPages > 1
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
 						# Prepare our new page
-						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
-						pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
-						pageRelativePath = relativePath.replace(filename, pageFilename)
+						if config.cleanurl
+							pageFilename = "index.#{extension}"
+							pageOutFilename = "index.#{outExtension}"
+							pagePath = path.join((pageNumber + (config.startingPageNumber - 1)).toString(), pageFilename)
+							pagePath = path.join(pagePathPrefix, pagePath) if pagePathPrefix.length > 0
+							if basename is 'index'
+								pageRelativePath = path.join(path.dirname(relativePath), pagePath)
+							else
+								pageRelativePath = path.join(path.dirname(relativePath), basename, pagePath)
+						else
+							pageFilename = "#{basename}-#{pageNumber}.#{extension}"
+							pageOutFilename = "#{outBasename}.#{pageNumber + (config.startingPageNumber - 1)}.#{outExtension}"
+							pagePath = pageFilename
+							pagePath = path.join(pagePathPrefix, pagePath) if pagePathPrefix.length > 0
+							pageRelativePath = path.join(path.dirname(relativePath), pagePath)
 
 						# Log
 						docpad.log('info', "Creating page #{pageNumber} for #{filePath} at #{pageRelativePath}")
