@@ -2,11 +2,19 @@
 module.exports = (BasePlugin) ->
 	# Requires
 	{TaskGroup} = require('taskgroup')
+	path = require('path')
 
 	# Define Plugin
 	class PagedPlugin extends BasePlugin
 		# Plugin Name
 		name: 'paged'
+
+		# Default Configuration
+		config:
+			split: true
+			index: 1
+			prefix: ''
+			compatibility: true
 
 		# Extend Collections
 		# Remove our auto pages as our source pages are removed
@@ -189,6 +197,7 @@ module.exports = (BasePlugin) ->
 			docpad = @docpad
 			{collection,templateData} = opts
 			database = docpad.getDatabase()
+			config = @config
 
 			# Create a new collection to temporarily store our pages to render
 			newPagesToRender = []
@@ -271,9 +280,16 @@ module.exports = (BasePlugin) ->
 				if numberOfPages > 1
 					[1...numberOfPages].forEach (pageNumber) ->  addTask (complete) ->
 						# Prepare our new page
-						pageFilename = "#{basename}-#{pageNumber}.#{extension}"
-						pageOutFilename = "#{outBasename}.#{pageNumber}.#{outExtension}"
-						pageRelativePath = relativePath.replace(filename, pageFilename)
+						newPageNumber = pageNumber + config.index
+						if config.split
+							pageFilename = "index.#{extension}"
+							pageOutFilename = "index.#{outExtension}"
+							pagePathBasename = if basename is 'index' then '' else basename
+							pageRelativePath = path.join path.dirname(relativePath), pagePathBasename, config.prefix, newPageNumber.toString(), pageFilename
+						else
+							pageFilename = "#{basename}-#{config.prefix}#{newPageNumber}.#{extension}"
+							pageOutFilename = "#{outBasename}.#{config.prefix}#{newPageNumber}.#{outExtension}"
+							pageRelativePath = relativePath.replace(filename, pageFilename)
 
 						# Log
 						docpad.log('info', "Creating page #{pageNumber} for #{filePath} at #{pageRelativePath}")
@@ -300,6 +316,18 @@ module.exports = (BasePlugin) ->
 							filename: pageFilename
 							outFilename: pageOutFilename
 						)
+
+						# Maintain compatibility with old url format e.g. index.1.html
+						secondaryOutFilename = "#{basename}.#{pageNumber}.#{outExtension}"
+						secondaryUrl = relativePath.replace(filename, secondaryOutFilename).replace("\\","/")
+						validForRedirect = not config.split and config.index isnt 0 and config.prefix is ""
+						if config.compatibility and
+						not validForRedirect and
+						secondaryOutFilename isnt pageOutFilename
+							pageDocument.addUrl("/#{secondaryUrl}")
+							docpad.log('info', "Created secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
+						else
+							docpad.log('warning', "Unable to create secondary url structure for #{pageOutFilename}")
 
 						# Normalize our properties of the new document
 						pageDocument.normalize (err) ->
