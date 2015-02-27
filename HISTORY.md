@@ -1,5 +1,10 @@
 # History
 
+- v2.3.0 February 27, 2013
+    - Updated default URL structure (with backwards compatibility and configuration options)
+        - Thanks to [Danny Smith](https://github.com/stormpooper) for [pull request #22](https://github.com/docpad/docpad-plugin-paged/pull/22), [Erv Walter](https://github.com/ervwalter) for [pull request #12](https://github.com/docpad/docpad-plugin-paged/pull/12)
+    - Updated dependencies
+
 - v2.2.5 December 16, 2013
 	- DocPad v6.65 compatibility
 	- Updated dependencies

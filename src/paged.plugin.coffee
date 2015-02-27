@@ -146,7 +146,7 @@ module.exports = (BasePlugin) ->
 			docpad.log('debug', "Remove pages for:", filePath)
 
 			# Completion callback
-			tasks = new TaskGroup().once 'complete', (err) ->
+			tasks = new TaskGroup().once 'completed', (err) ->
 				# Check
 				return next?(err)  if err
 
@@ -217,7 +217,7 @@ module.exports = (BasePlugin) ->
 			docpad.log('info', "Adding pages for #{sourcePageDocuments.length} documents...")
 
 			# Completion callback
-			tasks = new TaskGroup().once 'complete', (err) ->
+			tasks = new TaskGroup().once 'completed', (err) ->
 				# Check
 				return next(err)  if err
 

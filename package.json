@@ -1,7 +1,7 @@
 {
   "title": "Paged Plugin for [DocPad](http://docpad.org)",
   "name": "docpad-plugin-paged",
-  "version": "2.2.5",
+  "version": "2.3.0",
   "description": "DocPad plugin which adds the ability to render a document out to multiple pages",
   "homepage": "https://github.com/docpad/docpad-plugin-paged",
   "keywords": [
@@ -14,12 +14,14 @@
   "author": "2012+ Ben Delarre <ben@delarre.net> (http://www.delarre.net)",
   "maintainers": [
     "Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
+    "Danny Smith (https://github.com/StormPooper)"
   ],
   "contributors": [
     "Ben Delarre <ben@delarre.net> (https://github.com/benjamind)",
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-    "RobLoach (https://github.com/RobLoach)"
+    "RobLoach (https://github.com/RobLoach)",
+    "StormPooper (https://github.com/StormPooper)"
   ],
   "bugs": {
     "url": "https://github.com/docpad/docpad-plugin-paged/issues"
@@ -35,12 +37,12 @@
     "docpad": ">=6.46.4 <7"
   },
   "dependencies": {
-    "taskgroup": "~3.4.0"
+    "taskgroup": "~4.2.1"
   },
   "devDependencies": {
     "docpad": ">=6.46.4 <7",
     "coffee-script": "^1.9.0",
-    "projectz": "^0.4.3"
+    "projectz": "^0.5.0"
   },
   "main": "./out/paged.plugin.js",
   "scripts": {

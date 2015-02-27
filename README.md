@@ -336,6 +336,7 @@ These amazing people are maintaining this project:
 
 - Ben Delarre <ben@delarre.net> (https://github.com/benjamind)
 - Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)
+- Danny Smith (https://github.com/StormPooper)
 
 ### Sponsors
 
@@ -354,6 +355,7 @@ These amazing people have contributed code to this project:
 - [Ben Delarre](https://github.com/benjamind) <ben@delarre.net> — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=benjamind)
 - [Benjamin Lupton](https://github.com/balupton) <b@lupton.cc> — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=balupton)
 - [RobLoach](https://github.com/RobLoach) — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=RobLoach)
+- [StormPooper](https://github.com/StormPooper) — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=StormPooper)
 
 [Become a contributor!](https://github.com/docpad/docpad-plugin-paged/blob/master/CONTRIBUTING.md#files)
 
@@ -364,9 +366,13 @@ These amazing people have contributed code to this project:
 
 ## License
 
-Licensed under the incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT license](http://creativecommons.org/licenses/MIT/)
+Unless stated otherwise all works are:
 
-Copyright &copy; 2012+ Ben Delarre <ben@delarre.net> (http://www.delarre.net)
+- Copyright &copy; 2012+ Ben Delarre <ben@delarre.net> (http://www.delarre.net)
+
+and licensed under:
+
+- The incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT License](http://opensource.org/licenses/mit-license.php)
 
 <!-- /LICENSE -->
 
