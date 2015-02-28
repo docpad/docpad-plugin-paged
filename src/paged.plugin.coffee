@@ -327,7 +327,7 @@ module.exports = (BasePlugin) ->
 							pageDocument.addUrl("/#{secondaryUrl}")
 							docpad.log('info', "Created secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
 						else
-							docpad.log('warning', "Unable to create secondary url structure for #{pageOutFilename}")
+							docpad.log('warning', "Unable to create secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
 
 						# Normalize our properties of the new document
 						pageDocument.normalize (err) ->
