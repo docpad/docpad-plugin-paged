@@ -354,8 +354,8 @@ These amazing people have contributed code to this project:
 
 - [Ben Delarre](https://github.com/benjamind) <ben@delarre.net> — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=benjamind)
 - [Benjamin Lupton](https://github.com/balupton) <b@lupton.cc> — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=balupton)
+- [Danny Smith](https://github.com/StormPooper) — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=StormPooper)
 - [RobLoach](https://github.com/RobLoach) — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=RobLoach)
-- [StormPooper](https://github.com/StormPooper) — [view contributions](https://github.com/docpad/docpad-plugin-paged/commits?author=StormPooper)
 
 [Become a contributor!](https://github.com/docpad/docpad-plugin-paged/blob/master/CONTRIBUTING.md#files)
 
