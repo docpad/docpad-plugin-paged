@@ -325,16 +325,16 @@ module.exports = (BasePlugin) ->
 						)
 
 						# Maintain compatibility with old url format e.g. index.1.html
-						secondaryOutFilename = "#{basename}.#{pageNumber}.#{outExtension}"
-						secondaryUrl = relativePath.replace(filename, secondaryOutFilename).replace("\\","/")
-						validForRedirect = not config.split and config.index isnt 0 and config.prefix is ""
-						if config.compatibility and
-						not validForRedirect and
-						secondaryOutFilename isnt pageOutFilename
-							pageDocument.addUrl("/#{secondaryUrl}")
-							docpad.log('info', "Created secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
-						else
-							docpad.log('warning', "Unable to create secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
+						if config.compatibility
+							secondaryOutFilename = "#{basename}.#{pageNumber}.#{outExtension}"
+							secondaryUrl = relativePath.replace(filename, secondaryOutFilename).replace("\\","/")
+							validForRedirect = not config.split and config.index isnt 0 and config.prefix is ""
+							if not validForRedirect and
+							secondaryOutFilename isnt pageOutFilename
+								pageDocument.addUrl("/#{secondaryUrl}")
+								docpad.log('info', "Created secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
+							else
+								docpad.log('warning', "Unable to create secondary url structure for #{pageOutFilename} at /#{secondaryUrl}")
 
 						# Normalize our properties of the new document
 						pageDocument.normalize (err) ->
