@@ -75,9 +75,9 @@ module.exports = (BasePlugin) ->
 			# Create alias for getPagedUrl for backwards compatibility if there are no clashes
 			if typeof templateData.getPageUrl != 'function'
 				templateData.getPageUrl = templateData.getPagedUrl
-				docpad.log('warning', "getPageUrl is deprecated and may clash with other plugins. Use getPagedUrl instead.")
+				docpad.log('warning', "docpad-plugin-paged: getPageUrl is deprecated and may clash with other plugins. Use getPagedUrl instead.")
 			else
-				docpad.log('warning', "getPageUrl is already defined by another plugin. Use getPagedUrl instead.")
+				docpad.log('warning', "docpad-plugin-paged: getPageUrl is already defined by another plugin. Use getPagedUrl instead.")
             
 			# Do we have another page left?
 			templateData.hasNextPage = (document) ->
