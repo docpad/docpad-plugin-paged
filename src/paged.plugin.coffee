@@ -50,7 +50,7 @@ module.exports = (BasePlugin) ->
 				return subCollection
 
 			# Get the url of the desired page
-			templateData.getPageUrl = (pageNumber, document) ->
+			templateData.getPagedUrl = (pageNumber, document) ->
 				# Prepare
 				document ?= @getDocument()
 				page = document.get('page')
@@ -71,7 +71,14 @@ module.exports = (BasePlugin) ->
 
 				# Return
 				return pageUrl
-
+            
+			# Create alias for getPagedUrl for backwards compatibility if there are no clashes
+			if typeof templateData.getPageUrl != 'function'
+				templateData.getPageUrl = templateData.getPagedUrl
+				docpad.log('warning', "getPageUrl is deprecated and may clash with other plugins. Use getPagedUrl instead.")
+			else
+				docpad.log('warning', "getPageUrl is already defined by another plugin. Use getPagedUrl instead.")
+            
 			# Do we have another page left?
 			templateData.hasNextPage = (document) ->
 				# Prepare
@@ -93,7 +100,7 @@ module.exports = (BasePlugin) ->
 
 				# Check
 				if page.number < page.count-1
-					result = @getPageUrl(page.number+1, document)
+					result = @getPagedUrl(page.number+1, document)
 
 				# Default
 				return result
@@ -119,7 +126,7 @@ module.exports = (BasePlugin) ->
 
 				# Check
 				if page.number > 0
-					result = @getPageUrl(page.number-1, document)
+					result = @getPagedUrl(page.number-1, document)
 
 				# Return
 				return result
