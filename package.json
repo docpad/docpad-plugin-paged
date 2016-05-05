@@ -48,9 +48,7 @@
   "scripts": {
     "test": "node ./out/paged.test.js"
   },
-  "license": {
-    "type": "MIT"
-  },
+  "license": "MIT",
   "badges": {
     "travis": true,
     "npm": true,
