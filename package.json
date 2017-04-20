@@ -1,7 +1,7 @@
 {
   "title": "Paged Plugin for [DocPad](http://docpad.org)",
   "name": "docpad-plugin-paged",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "DocPad plugin which adds the ability to render a document out to multiple pages",
   "homepage": "https://github.com/docpad/docpad-plugin-paged",
   "license": "MIT",

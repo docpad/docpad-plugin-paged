@@ -29,11 +29,13 @@
 This plugin provides [DocPad](https://docpad.org) with Paging. Documents can declare a number of pages that should be rendered for the document, or a collection over which the document should be rendered repeatedly.
 
 
-## Install
+<!-- INSTALL/ -->
 
-```
-docpad install paged
-```
+<h2>Install</h2>
+
+Install this DocPad plugin by entering <code>docpad install paged</code> into your terminal.
+
+<!-- /INSTALL -->
 
 
 ## Usage
@@ -198,7 +200,7 @@ You can customise the URL format by setting custom preferences. The default conf
 	prefix: ''
 	index: 1
 	compatibility: true
-	
+
 The examples below are with the [Clean URLs Plugin](https://github.com/docpad/docpad-plugin-cleanurls) installed to remove the file extensions, but each option also works without it. Each option is also compatible with CLean URLs Plugin's static redirection generation.
 
 ### split
@@ -288,8 +290,8 @@ For example, when combined with `prefix: 'page'` and `index: 1`, the generated u
     index: [anything other than 0]
     prefix: ''
     compatibility: true
-    
-Setting your configuration to the above will not create the secondary url for each page, to prevent it clashing with the primary url. 
+
+Setting your configuration to the above will not create the secondary url for each page, to prevent it clashing with the primary url.
 
 Set `compatibility: false` to prevent the additional urls being generated.
 

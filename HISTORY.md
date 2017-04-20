@@ -1,5 +1,8 @@
 # History
 
+## v2.5.0 2017 April 20
+- Updated base files
+
 ## v2.4.0 2015 March 1
 - B/C Deprecated `@getPageUrl` template helper and replaced it with `@getPagedUrl`. Allows usage of both unless there is a clash with another plugin [issue #10](https://github.com/docpad/docpad-plugi-paged/issues/10)
 - Prevent displaying URL compatibility warnings if compatibility is turned off in config
