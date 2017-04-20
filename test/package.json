@@ -4,6 +4,6 @@
 	"private": true,
 	"dependencies": {
 		"docpad-plugin-cleanurls": "~2.10.0",
-		"docpad-plugin-eco": "2"
+		"docpad-plugin-eco": "~2.2.1"
 	}
 }
