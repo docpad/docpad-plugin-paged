@@ -1,11 +1,11 @@
+'use strict'
+
 # Test our plugin using DocPad's Testers
-require('docpad').require('testers')
+module.exports = require('docpad-plugintester')
 	.test(
 		# Test Configuration
 		{
 			testerName: 'paged without cleanurls'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			autoExit: 'safe'
 			removeWhitespace: true
@@ -21,8 +21,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged without cleanurls with split disabled'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			autoExit: 'safe'
 			outExpectedPath: __dirname+'/../test/out-expected-nosplit'
@@ -42,8 +40,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged without cleanurls with index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-index'
 			autoExit: 'safe'
@@ -63,8 +59,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged without cleanurls with prefix'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-prefix'
 			autoExit: 'safe'
@@ -84,8 +78,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean'
 			autoExit: 'safe'
@@ -96,8 +88,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls with split disabled'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-nosplit'
 			autoExit: 'safe'
@@ -115,8 +105,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls with index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-index'
 			autoExit: 'safe'
@@ -134,8 +122,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls with prefix'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-prefix'
 			autoExit: 'safe'
@@ -153,8 +139,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static'
 			removeWhitespace: true
@@ -172,8 +156,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static with split disabled'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static-nosplit'
 			removeWhitespace: true
@@ -192,8 +174,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static with index'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static-index'
 			removeWhitespace: true
@@ -211,8 +191,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static with prefix'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static-prefix'
 			removeWhitespace: true
@@ -230,8 +208,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static with compatibility off'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static-nocompat'
 			removeWhitespace: true
@@ -249,8 +225,6 @@ require('docpad').require('testers')
 		# Test Configuration
 		{
 			testerName: 'paged with cleanurls on static with non-backwards compatible format'
-			testerClass: 'RendererTester'
-			pluginPath: __dirname+'/..'
 			pluginName: 'paged'
 			outExpectedPath: __dirname+'/../test/out-expected-clean-static-noback'
 			removeWhitespace: true
