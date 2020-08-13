@@ -309,6 +309,13 @@ The generated url pattern will be:
 
 <!-- /CONFIGURE -->
 
+
+
+
+
+
+
+
 <!-- INSTALL/ -->
 
 <h2>Install</h2>
