@@ -110,7 +110,7 @@
     "coffeescript": "^2.5.1",
     "docpad": "^6.83.1",
     "docpad-plugintester": "^1.7.3",
-    "projectz": "^2.13.0",
+    "projectz": "^4.2.0",
     "valid-directory": "^3.0.0"
   },
   "scripts": {
